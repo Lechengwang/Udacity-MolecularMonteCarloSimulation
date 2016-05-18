@@ -6,6 +6,8 @@ MYDIR=./
 
 CFLAGS =-I$(MYDIR)sprng/include -DMOVECENTROIDTEST $(GSL_CFLAGS)
 LDFLAGS=-lm -L$(MYDIR)sprng/lib -llcg -static $(GSL_LDFLAG)
+#For MacOS X
+#LDFLAGS=-lm -L$(MYDIR)sprng/lib -llcg $(GSL_LDFLAG)
  
 #-------------------------------------------------------------------------
 #  Compilers
