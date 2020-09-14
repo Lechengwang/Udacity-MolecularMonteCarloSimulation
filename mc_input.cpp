@@ -25,7 +25,7 @@ string FNPrefix;
 
 string MCFileName;     // mc output file name (no extension)
 
-void IOReadParams(const char in_file[])
+void IOReadParams(const char in_file[], MCSettings settings)
 {
    const char *_proc_=__func__;    // "MCReadInput()"; 
 
@@ -48,7 +48,9 @@ void IOReadParams(const char in_file[])
      else
      if (params==IO_TEMPERATURE)
      {
-        inf>>Temperature;
+        double temperature;
+        inf>>temperature;
+        settings.setTemperature(temperature);
      }
      else
      if (params==IO_ATOM)
@@ -92,7 +94,7 @@ void IOReadParams(const char in_file[])
 // begin DUMP
    cout << "OutPut   "          <<OutputDir<<endl;
    cout << "File Name Prefix   "<<FNPrefix<<endl;
-   cout << "Temperature "<<Temperature<<endl;
+   cout << "Temperature "<<settings.getTemperature()<<endl;
    int w=6;
    cout << setw(w) << MCAtom.type << BLANK;
    cout << setw(w) << MCAtom.mcstep << BLANK;

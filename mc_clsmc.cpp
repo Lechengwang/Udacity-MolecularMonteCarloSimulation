@@ -12,7 +12,7 @@
 double MCTotal;
 double MCAccep;
 
-void MCMove(void)
+void MCMove(MCSettings mcSettings)
 {
   int numb=NumbMoveAtoms;
   double disp[NDIM];
@@ -43,7 +43,7 @@ void MCMove(void)
 
     if (deltav<0.0)             Accepted = true;
     else if
-    (exp(-deltav/Temperature)>rnd2()) Accepted = true;
+    (exp(-deltav/mcSettings.getTemperature())>rnd2()) Accepted = true;
 
     MCTotal+= 1.0;
     if (Accepted)

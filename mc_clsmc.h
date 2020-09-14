@@ -4,7 +4,7 @@
 extern double MCTotal;
 extern double MCAccep;
 
-void MCMove(void);
+void MCMove(MCSettings);
 double MCPot(int,double **);
 
 #endif

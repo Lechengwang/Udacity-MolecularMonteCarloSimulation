@@ -4,6 +4,14 @@
 #include "mc_confg.h"
 #include <string>
 
+class MCSettings {
+public:
+  void setTemperature(double);
+  double getTemperature();
+private:
+  double _temperature;
+};
+
 extern double Temperature;
 extern int    NDIM;
 extern long int NumberOfMCSteps;

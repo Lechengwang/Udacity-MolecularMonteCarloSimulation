@@ -8,6 +8,8 @@ const char FINPUT[]="qmc.input";   // input params file
 #include <stdio.h>
 
 #include <string>
+class MCSettings;
+
 const int  IO_PRECISION       =  6;
 const int  IO_BLOCKNUMB_WIDTH =  3;
 const int  IO_WIDTH           = 14;  // width > precision + 4 + 3    
@@ -37,7 +39,7 @@ const char IO_EXT_ENG []    = ".eng.txt";   // energy
 const char IO_SUM [] = "_sum";          // file name postfix for accum averages
 const char IO_EXT_POS []    = ".pos.txt";   // atomic position
 
-void IOReadParams(const char []);
+void IOReadParams(const char [], MCSettings);
 void io_setout(fstream &, int=IO_PRECISION);
 void IOFileBackUp(const char []);
 int FileExist (const char []);

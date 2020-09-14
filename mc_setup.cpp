@@ -23,7 +23,6 @@ int MCSKIP_TOTAL = 5000;    //  to save accumulated average
 int MCSKIP_AVERG = 10;      //  to evaluate averages
 
 TParticle MCAtom;
-double Temperature;
 int NDIM;
 int NumbAtoms;
 int NumbMoveAtoms;
@@ -43,6 +42,14 @@ const char IO_FIX   [] = "FIX";
 
 int MPIsize;
 int MPIrank;
+
+void MCSettings::setTemperature(double temperature) {
+  _temperature = temperature;
+}
+
+double MCSettings::getTemperature() {
+ return _temperature;
+}
 
 void MCMemAlloc(void)  // allocate  memmory 
 {

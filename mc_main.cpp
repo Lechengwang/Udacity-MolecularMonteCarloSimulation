@@ -38,7 +38,8 @@ int main()
  double vtest;
  MPIsize = 1;            // this is for InitRandom()          
  MPIrank = MPI_MASTER;   // this is for InitRandom() 
- IOReadParams(FINPUT);
+ MCSettings mcSettings;
+ IOReadParams(FINPUT, mcSettings);
  RandomInit(MPIrank,MPIsize);
  MCConfigInit();
  InitPotentials();
@@ -62,7 +63,7 @@ int main()
 
    while (StepCount++ < NumberOfMCSteps)
    {
-     MCMove();
+     MCMove(mcSettings);
 
      if (blockCount>NumberOfEQBlocks)        // skip equilibration steps
      {
