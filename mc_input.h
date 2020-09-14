@@ -39,7 +39,7 @@ const char IO_EXT_ENG []    = ".eng.txt";   // energy
 const char IO_SUM [] = "_sum";          // file name postfix for accum averages
 const char IO_EXT_POS []    = ".pos.txt";   // atomic position
 
-void IOReadParams(const char [], MCSettings);
+void IOReadParams(const char [], MCSettings &);
 void io_setout(fstream &, int=IO_PRECISION);
 void IOFileBackUp(const char []);
 int FileExist (const char []);

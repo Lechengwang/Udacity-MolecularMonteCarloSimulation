@@ -25,7 +25,7 @@ string FNPrefix;
 
 string MCFileName;     // mc output file name (no extension)
 
-void IOReadParams(const char in_file[], MCSettings settings)
+void IOReadParams(const char in_file[], MCSettings &settings)
 {
    const char *_proc_=__func__;    // "MCReadInput()"; 
 
