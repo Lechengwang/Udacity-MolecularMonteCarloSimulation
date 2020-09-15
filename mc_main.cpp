@@ -28,7 +28,7 @@ fstream _feng;      // save accumulated energy
 #ifdef POTTEST
 const double rtest = 2.9654;
 #endif
-void MCGetAverage(std::shared_ptr<Potential>);
+void MCGetAverage(std::shared_ptr<Potential>, std::shared_ptr<MCEstim>);
 void SaveAcceptRatio(long int,long int);
 void SaveSumEnergy(double,double);
 void SaveBlockAverages(long int);
@@ -50,9 +50,10 @@ int main()
 #endif
  MCTotal=0.0;
  MCAccep=0.0;
- InitMCEstims();
+ // make_unique not work in c++11
+ std::shared_ptr<MCEstim> estim = std::make_shared<MCEstim>();
  InitTotalAverage();
- Fix_Density();
+ estim->Fix_Density();
  long int blockCount=0;
  double sumsCount=0.0;
  while (blockCount < mcSettings.getNumberOfMCBlocks())
@@ -70,7 +71,7 @@ int main()
      {
               // evaluate averages
        if (StepCount % mcSettings.getMCSkipAverg() == 0)   // skip correlated configurations
-         MCGetAverage(pot);
+         MCGetAverage(pot, estim);
 
        if (StepCount % mcSettings.getMCSkipTotal() == 0)
        {
@@ -89,16 +90,16 @@ int main()
    bc<<blockCount;
 
    string fname1 = FNPrefix + bc.str();
-   SaveDensities1D    (fname1.c_str(),totalCount);
+   estim->SaveDensities1D    (fname1.c_str(),totalCount);
  }//End Blocks
 }
 
-void MCGetAverage(std::shared_ptr<Potential> pot)
+void MCGetAverage(std::shared_ptr<Potential> pot, std::shared_ptr<MCEstim> estim)
 {
    avergCount += 1.0;
    totalCount += 1.0;
 
-   double spot = SinglePot_Density(pot); // pot energy and density distributions
+   double spot = estim -> SinglePot_Density(pot); // pot energy and density distributions
 
   _bpot += spot;  // block average for pot energy
 

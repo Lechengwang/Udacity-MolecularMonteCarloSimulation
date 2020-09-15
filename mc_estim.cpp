@@ -22,10 +22,9 @@ double _delta_radius;
 double * _gr1D;
 double * _fix1D;
 
-void bin_1Ddensity(double);
-
-void InitMCEstims(void)
+MCEstim::MCEstim()
 {
+ std::cout << "Initializing MC Estimators..." << std::endl;
  _delta_radius = (MAX_RADIUS - MIN_RADIUS)/(double)MC_BINSR;
  _gr1D=new double [MC_BINSR];
  _fix1D = new double [MC_BINSR];
@@ -33,7 +32,13 @@ void InitMCEstims(void)
  {_gr1D[ir]= 0.0;_fix1D[ir]=0.0;}
 }
 
-void Fix_Density(void)
+MCEstim::~MCEstim() {
+ std::cout << "MCEstim destructor called..." << std::endl;
+ delete _gr1D;
+ delete _fix1D;
+}
+
+void MCEstim::Fix_Density()
 //Calcualte the 1D Density of H2 fixed-fixed, without the moving-moving and moving-fixed
 //Should be called only once before MC sampling
 //Normalized to Nfix*(Nfix-1)/2
@@ -84,7 +89,7 @@ void Fix_Density(void)
    
 }
 
-double SinglePot_Density(std::shared_ptr<Potential> pot)
+double MCEstim::SinglePot_Density(std::shared_ptr<Potential> pot)
 {
   const char *_proc_=__func__; //  SinglePot_Density()
 
@@ -134,7 +139,7 @@ double SinglePot_Density(std::shared_ptr<Potential> pot)
   return (spot);
 }
 
-void SaveDensities1D(const char fname [], double acount)
+void MCEstim::SaveDensities1D(const char fname [], double acount)
 {
   fstream fid;
   string fdens;
@@ -175,7 +180,7 @@ void SaveDensities1D(const char fname [], double acount)
   fid.close();
 }
 
-void bin_1Ddensity(double r)
+void MCEstim::bin_1Ddensity(double r)
 //  r         ==   radius
 //  dtype     ==   density type
 {

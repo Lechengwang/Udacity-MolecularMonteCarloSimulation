@@ -6,9 +6,18 @@
 
 class Potential;
 
-void InitMCEstims(void);
-void Fix_Density(void);
-double SinglePot_Density(std::shared_ptr<Potential>);
-void SaveDensities1D(const char [], double);
+class MCEstim {
+public:
+  MCEstim();
+  ~MCEstim();
+  void Fix_Density(void);
+  double SinglePot_Density(std::shared_ptr<Potential>);
+  void SaveDensities1D(const char [], double);
+private:
+  double _delta_radius;
+  double * _gr1D;
+  double * _fix1D;
+  void bin_1Ddensity(double);
+};
 
 #endif
