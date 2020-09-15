@@ -8,20 +8,25 @@ class MCSettings {
 public:
   // Setters
   void setTemperature(double);
+  void setNumberOfMCSteps(long int);
+  void setNumberOfMCBlocks(long int);
+  void setNumberOfEQBlocks(long int);
 
   // Getters
   double getTemperature();
+  long int getNumberOfMCSteps();
+  long int getNumberOfMCBlocks();
+  long int getNumberOfEQBlocks();
 
   // Some constants
   // Dimensions. We are living in 3D space so it is 3
   static const int NDIM = 3;
 private:
   double _temperature;
+  long int _numberOfMCSteps;
+  long int _numberOfMCBlocks;
+  long int _numberOfEQBlocks;
 };
-
-extern long int NumberOfMCSteps;
-extern long int NumberOfMCBlocks;
-extern long int NumberOfEQBlocks;
 
 extern int MCSKIP_RATIO;     //  to save information regarding the accept ratio
 extern int MCSKIP_TOTAL;     //  to save accumulated average

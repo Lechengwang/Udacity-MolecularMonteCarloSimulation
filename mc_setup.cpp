@@ -14,10 +14,6 @@
 
 //#define POSTEST 1
 
-long int NumberOfMCSteps;  // number of steps within a block
-long int NumberOfMCBlocks;  // number of blocks
-long int NumberOfEQBlocks;  // number of equilibr blocks
-
 int MCSKIP_RATIO = 5000;    //  to save information regarding the accept ratio
 int MCSKIP_TOTAL = 5000;    //  to save accumulated average
 int MCSKIP_AVERG = 10;      //  to evaluate averages
@@ -42,12 +38,40 @@ const char IO_FIX   [] = "FIX";
 int MPIsize;
 int MPIrank;
 
+// Member methods: setters
+
 void MCSettings::setTemperature(double temperature) {
   _temperature = temperature;
 }
 
+void MCSettings::setNumberOfMCSteps(long steps) {
+  _numberOfMCSteps = steps;
+}
+
+void MCSettings::setNumberOfMCBlocks(long blocks) {
+  _numberOfMCBlocks = blocks;
+}
+
+void MCSettings::setNumberOfEQBlocks(long blocks) {
+  _numberOfEQBlocks = blocks;
+}
+
+// Member methods: getters
+
 double MCSettings::getTemperature() {
- return _temperature;
+  return _temperature;
+}
+
+long MCSettings::getNumberOfMCSteps() {
+  return _numberOfMCSteps;
+}
+
+long MCSettings::getNumberOfMCBlocks() {
+  return _numberOfMCBlocks;
+}
+
+long MCSettings::getNumberOfEQBlocks() {
+  return _numberOfEQBlocks;
 }
 
 void MCMemAlloc(void)  // allocate  memmory 

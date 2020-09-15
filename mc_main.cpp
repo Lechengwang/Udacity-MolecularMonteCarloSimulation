@@ -54,18 +54,18 @@ int main()
  Fix_Density();
  long int blockCount=0;
  double sumsCount=0.0;
- while (blockCount<NumberOfMCBlocks)
+ while (blockCount < mcSettings.getNumberOfMCBlocks())
  {
    blockCount ++;
    avergCount = 0.0;
    _bpot = 0.0;
    long int StepCount = 0;        // BEGIN NEW MC PASS
 
-   while (StepCount++ < NumberOfMCSteps)
+   while (StepCount++ < mcSettings.getNumberOfMCSteps())
    {
      MCMove(mcSettings);
 
-     if (blockCount>NumberOfEQBlocks)        // skip equilibration steps
+     if (blockCount>mcSettings.getNumberOfEQBlocks())        // skip equilibration steps
      {
               // evaluate averages
        if (StepCount % MCSKIP_AVERG == 0)   // skip correlated configurations
@@ -80,7 +80,7 @@ int main()
      if (StepCount % MCSKIP_RATIO == 0)
      SaveAcceptRatio(StepCount,blockCount);
    }//End Steps
-   if (blockCount>NumberOfEQBlocks)   // skip equilibration steps
+   if (blockCount>mcSettings.getNumberOfEQBlocks())   // skip equilibration steps
        SaveBlockAverages(blockCount);
    stringstream bc;                // convert block # to string
    bc.width(IO_BLOCKNUMB_WIDTH);

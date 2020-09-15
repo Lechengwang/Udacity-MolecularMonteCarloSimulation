@@ -62,12 +62,17 @@ void IOReadParams(const char in_file[], MCSettings &settings)
      else
      if (params==IO_NUMBEROFBLOCKS)
      {
+         long int NumberOfMCBlocks, NumberOfEQBlocks;
          inf>>NumberOfMCBlocks>>NumberOfEQBlocks;
+         settings.setNumberOfMCBlocks(NumberOfMCBlocks);
+         settings.setNumberOfEQBlocks(NumberOfEQBlocks);
      }
      else
      if (params==IO_NUMBEROFSTEPS)
      {
+         long int NumberOfMCSteps;
          inf>>NumberOfMCSteps;
+         settings.setNumberOfMCSteps(NumberOfMCSteps);
      }
      else
      if (params==IO_MCSKIP_RATIO)
@@ -101,8 +106,8 @@ void IOReadParams(const char in_file[], MCSettings &settings)
    cout << setw(w) << MCAtom.fpos   << BLANK;
 
    cout << endl;
-   cout << "Number of Steps in block = " << NumberOfMCSteps << endl;
-   cout << "Number of Blocks = " << NumberOfMCBlocks << BLANK << NumberOfEQBlocks << endl;
+   cout << "Number of Steps in block = " << settings.getNumberOfMCSteps() << endl;
+   cout << "Number of Blocks = " << settings.getNumberOfMCBlocks() << BLANK << settings.getNumberOfEQBlocks() << endl;
 
    cout << endl;
 
