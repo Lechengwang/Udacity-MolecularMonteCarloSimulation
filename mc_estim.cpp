@@ -22,9 +22,10 @@ double _delta_radius;
 double * _gr1D;
 double * _fix1D;
 
-MCEstim::MCEstim()
+MCEstim::MCEstim(std::shared_ptr<Potential> pot)
 {
  std::cout << "Initializing MC Estimators..." << std::endl;
+ _pot = pot;
  _delta_radius = (MAX_RADIUS - MIN_RADIUS)/(double)MC_BINSR;
  _gr1D=new double [MC_BINSR];
  _fix1D = new double [MC_BINSR];
@@ -89,7 +90,7 @@ void MCEstim::Fix_Density()
    
 }
 
-double MCEstim::SinglePot_Density(std::shared_ptr<Potential> pot)
+double MCEstim::SinglePot_Density()
 {
   const char *_proc_=__func__; //  SinglePot_Density()
 
@@ -114,7 +115,7 @@ double MCEstim::SinglePot_Density(std::shared_ptr<Potential> pot)
 
          double r = sqrt(dr2);
          bin_1Ddensity (r);
-         spot += pot -> SPot1D(r);
+         spot += _pot -> SPot1D(r);
     }
   }
 // Pot and density of Moving-Moving pairs
@@ -133,7 +134,7 @@ double MCEstim::SinglePot_Density(std::shared_ptr<Potential> pot)
 
          double r = sqrt(dr2);
          bin_1Ddensity (r);
-         spot += pot -> SPot1D(r);
+         spot += _pot -> SPot1D(r);
     }
   }
   return (spot);
