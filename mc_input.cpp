@@ -27,7 +27,7 @@ string FNPrefix;
 
 string MCFileName;     // mc output file name (no extension)
 
-void IOReadParams(const char in_file[], MCSettings &settings)
+void MCSettings::IOReadParams(const char in_file[])
 {
    const char *_proc_=__func__;    // "MCReadInput()"; 
 
@@ -51,7 +51,7 @@ void IOReadParams(const char in_file[], MCSettings &settings)
      {
         double temperature;
         inf>>temperature;
-        settings.setTemperature(temperature);
+        setTemperature(temperature);
      }
      else
      if (params==IO_ATOM)
@@ -66,36 +66,36 @@ void IOReadParams(const char in_file[], MCSettings &settings)
      {
          long int NumberOfMCBlocks, NumberOfEQBlocks;
          inf>>NumberOfMCBlocks>>NumberOfEQBlocks;
-         settings.setNumberOfMCBlocks(NumberOfMCBlocks);
-         settings.setNumberOfEQBlocks(NumberOfEQBlocks);
+         setNumberOfMCBlocks(NumberOfMCBlocks);
+         setNumberOfEQBlocks(NumberOfEQBlocks);
      }
      else
      if (params==IO_NUMBEROFSTEPS)
      {
          long int NumberOfMCSteps;
          inf>>NumberOfMCSteps;
-         settings.setNumberOfMCSteps(NumberOfMCSteps);
+         setNumberOfMCSteps(NumberOfMCSteps);
      }
      else
      if (params==IO_MCSKIP_RATIO)
      {
         int MCSKIP_RATIO;
         inf >> MCSKIP_RATIO;
-        settings.setMCSkipRatio(MCSKIP_RATIO);
+        setMCSkipRatio(MCSKIP_RATIO);
      }
      else
      if (params==IO_MCSKIP_TOTAL)
      {
         int MCSKIP_TOTAL;
         inf >> MCSKIP_TOTAL;
-        settings.setMCSkipTotal(MCSKIP_TOTAL);
+        setMCSkipTotal(MCSKIP_TOTAL);
      }
      else
      if (params==IO_MCSKIP_AVERG)
      {
         int MCSKIP_AVERG;
         inf >> MCSKIP_AVERG;
-        settings.setMCSkipAverg(MCSKIP_AVERG);
+        setMCSkipAverg(MCSKIP_AVERG);
      }
      else
      {}
@@ -106,7 +106,7 @@ void IOReadParams(const char in_file[], MCSettings &settings)
 // begin DUMP
    cout << "OutPut   "          <<OutputDir<<endl;
    cout << "File Name Prefix   "<<FNPrefix<<endl;
-   cout << "Temperature "<<settings.getTemperature()<<endl;
+   cout << "Temperature "<<getTemperature()<<endl;
    int w=6;
    cout << setw(w) << MCAtom.type << BLANK;
    cout << setw(w) << MCAtom.mcstep << BLANK;
@@ -114,14 +114,14 @@ void IOReadParams(const char in_file[], MCSettings &settings)
    cout << setw(w) << MCAtom.fpos   << BLANK;
 
    cout << endl;
-   cout << "Number of Steps in block = " << settings.getNumberOfMCSteps() << endl;
-   cout << "Number of Blocks = " << settings.getNumberOfMCBlocks() << BLANK << settings.getNumberOfEQBlocks() << endl;
+   cout << "Number of Steps in block = " << getNumberOfMCSteps() << endl;
+   cout << "Number of Blocks = " << getNumberOfMCBlocks() << BLANK << getNumberOfEQBlocks() << endl;
 
    cout << endl;
 
-   cout << "Number of steps to skip to save ACCEPT RATIO" << BLANK << settings.getMCSkipRatio() << endl;
-   cout << "Number of steps to skip to save ACCUML AVERG" << BLANK << settings.getMCSkipTotal() << endl;
-   cout << "Number of steps to skip to evaluate AVERAGES" << BLANK << settings.getMCSkipAverg() << endl;
+   cout << "Number of steps to skip to save ACCEPT RATIO" << BLANK << getMCSkipRatio() << endl;
+   cout << "Number of steps to skip to save ACCUML AVERG" << BLANK << getMCSkipTotal() << endl;
+   cout << "Number of steps to skip to evaluate AVERAGES" << BLANK << getMCSkipAverg() << endl;
 
 }
 

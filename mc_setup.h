@@ -57,6 +57,7 @@ public:
 
   // initiators:
   void MCConfigInit(void);
+  void IOReadParams(const char []); // This method defined in mc_input.cpp since it is related to IO
 
 private:
   double _temperature;

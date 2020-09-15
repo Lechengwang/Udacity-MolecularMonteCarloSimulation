@@ -38,7 +38,7 @@ int main()
 {
  double vtest;
  MCSettings mcSettings;
- IOReadParams(FINPUT, mcSettings);
+ mcSettings.IOReadParams(FINPUT);
  // Only one random number generator is enough
  RandomInit(0,1);
  mcSettings.MCConfigInit();
