@@ -77,17 +77,23 @@ void IOReadParams(const char in_file[], MCSettings &settings)
      else
      if (params==IO_MCSKIP_RATIO)
      {
+        int MCSKIP_RATIO;
         inf >> MCSKIP_RATIO;
+        settings.setMCSkipRatio(MCSKIP_RATIO);
      }
      else
      if (params==IO_MCSKIP_TOTAL)
      {
+        int MCSKIP_TOTAL;
         inf >> MCSKIP_TOTAL;
+        settings.setMCSkipTotal(MCSKIP_TOTAL);
      }
      else
      if (params==IO_MCSKIP_AVERG)
      {
+        int MCSKIP_AVERG;
         inf >> MCSKIP_AVERG;
+        settings.setMCSkipAverg(MCSKIP_AVERG);
      }
      else
      {}
@@ -111,9 +117,9 @@ void IOReadParams(const char in_file[], MCSettings &settings)
 
    cout << endl;
 
-   cout << "Number of steps to skip to save ACCEPT RATIO" << BLANK << MCSKIP_RATIO << endl;
-   cout << "Number of steps to skip to save ACCUML AVERG" << BLANK << MCSKIP_TOTAL << endl;
-   cout << "Number of steps to skip to evaluate AVERAGES" << BLANK << MCSKIP_AVERG << endl;
+   cout << "Number of steps to skip to save ACCEPT RATIO" << BLANK << settings.getMCSkipRatio() << endl;
+   cout << "Number of steps to skip to save ACCUML AVERG" << BLANK << settings.getMCSkipTotal() << endl;
+   cout << "Number of steps to skip to evaluate AVERAGES" << BLANK << settings.getMCSkipAverg() << endl;
 
 }
 

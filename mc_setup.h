@@ -11,26 +11,31 @@ public:
   void setNumberOfMCSteps(long int);
   void setNumberOfMCBlocks(long int);
   void setNumberOfEQBlocks(long int);
+  void setMCSkipRatio(int);
+  void setMCSkipTotal(int);
+  void setMCSkipAverg(int);
 
   // Getters
   double getTemperature();
-  long int getNumberOfMCSteps();
-  long int getNumberOfMCBlocks();
-  long int getNumberOfEQBlocks();
+  long getNumberOfMCSteps();
+  long getNumberOfMCBlocks();
+  long getNumberOfEQBlocks();
+  int getMCSkipRatio();
+  int getMCSkipTotal();
+  int getMCSkipAverg();
 
   // Some constants
   // Dimensions. We are living in 3D space so it is 3
   static const int NDIM = 3;
 private:
   double _temperature;
-  long int _numberOfMCSteps;
-  long int _numberOfMCBlocks;
-  long int _numberOfEQBlocks;
+  long _numberOfMCSteps;
+  long _numberOfMCBlocks;
+  long _numberOfEQBlocks;
+  int _mcSkipRatio;     //  to save information regarding the accept ratio
+  int _mcSkipTotal;     //  to save accumulated average
+  int _mcSkipAverg;     //  to evaluate averages
 };
-
-extern int MCSKIP_RATIO;     //  to save information regarding the accept ratio
-extern int MCSKIP_TOTAL;     //  to save accumulated average
-extern int MCSKIP_AVERG;     //  to evaluate averages
 
 typedef struct TParticle
 {

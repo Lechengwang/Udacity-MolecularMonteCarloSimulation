@@ -14,10 +14,6 @@
 
 //#define POSTEST 1
 
-int MCSKIP_RATIO = 5000;    //  to save information regarding the accept ratio
-int MCSKIP_TOTAL = 5000;    //  to save accumulated average
-int MCSKIP_AVERG = 10;      //  to evaluate averages
-
 TParticle MCAtom;
 int NumbAtoms;
 int NumbMoveAtoms;
@@ -56,6 +52,18 @@ void MCSettings::setNumberOfEQBlocks(long blocks) {
   _numberOfEQBlocks = blocks;
 }
 
+void MCSettings::setMCSkipRatio(int ratio) {
+  _mcSkipRatio = ratio;
+}
+
+void MCSettings::setMCSkipTotal(int total) {
+  _mcSkipTotal = total;
+}
+
+void MCSettings::setMCSkipAverg(int averg) {
+  _mcSkipAverg = averg;
+}
+
 // Member methods: getters
 
 double MCSettings::getTemperature() {
@@ -72,6 +80,18 @@ long MCSettings::getNumberOfMCBlocks() {
 
 long MCSettings::getNumberOfEQBlocks() {
   return _numberOfEQBlocks;
+}
+
+int MCSettings::getMCSkipRatio() {
+  return _mcSkipRatio;
+}
+
+int MCSettings::getMCSkipTotal() {
+  return _mcSkipTotal;
+}
+
+int MCSettings::getMCSkipAverg() {
+  return _mcSkipAverg;
 }
 
 void MCMemAlloc(void)  // allocate  memmory 

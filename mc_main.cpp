@@ -68,16 +68,16 @@ int main()
      if (blockCount>mcSettings.getNumberOfEQBlocks())        // skip equilibration steps
      {
               // evaluate averages
-       if (StepCount % MCSKIP_AVERG == 0)   // skip correlated configurations
+       if (StepCount % mcSettings.getMCSkipAverg() == 0)   // skip correlated configurations
          MCGetAverage();
 
-       if (StepCount % MCSKIP_TOTAL == 0)
+       if (StepCount % mcSettings.getMCSkipTotal() == 0)
        {
          sumsCount += 1.0;
          SaveSumEnergy (totalCount,sumsCount);
        }
      }
-     if (StepCount % MCSKIP_RATIO == 0)
+     if (StepCount % mcSettings.getMCSkipRatio() == 0)
      SaveAcceptRatio(StepCount,blockCount);
    }//End Steps
    if (blockCount>mcSettings.getNumberOfEQBlocks())   // skip equilibration steps
