@@ -11,10 +11,15 @@
 
 using namespace mcsimulation;
 
-double MCTotal;
-double MCAccep;
+MCMover::MCMover(MCSettings mcSettings, std::shared_ptr<RNDGenerator> rnd, std::shared_ptr<Potential> pot) {
+  _MCTotal = 0;
+  _MCAccep = 0;
+  _mcSettings = mcSettings;
+  _rnd = rnd;
+  _pot = pot;
+}
 
-void MCMove(MCSettings mcSettings, std::shared_ptr<RNDGenerator> rnd, std::shared_ptr<Potential> pot)
+void MCMover::MCMove()
 {
   int numb=NumbMoveAtoms;
   double disp[MCSettings::NDIM];
@@ -26,7 +31,7 @@ void MCMove(MCSettings mcSettings, std::shared_ptr<RNDGenerator> rnd, std::share
     #endif
     for (int id=0;id<MCSettings::NDIM;id++)   // MOVE
     {
-       disp[id] = MCAtom.mcstep*(rnd->rnd1()-0.5);
+       disp[id] = MCAtom.mcstep*(_rnd->rnd1()-0.5);
        #ifdef coodstest
        cout<<"Offset : "<<disp[id]<<endl;
        #endif
@@ -40,17 +45,17 @@ void MCMove(MCSettings mcSettings, std::shared_ptr<RNDGenerator> rnd, std::share
     }
 
     double deltav = 0.0;         // ACCEPT/REJECT
-    deltav += (MCPot(gatom,newcoords, pot)-MCPot(gatom,MCCoords, pot));
+    deltav += (MCPot(gatom,newcoords)-MCPot(gatom,MCCoords));
     bool Accepted = false;
 
     if (deltav<0.0)             Accepted = true;
     else if
-    (exp(-deltav/mcSettings.getTemperature())>rnd->rnd2()) Accepted = true;
+    (exp(-deltav/_mcSettings.getTemperature())>_rnd->rnd2()) Accepted = true;
 
-    MCTotal+= 1.0;
+    _MCTotal+= 1.0;
     if (Accepted)
     {
-       MCAccep += 1.0;
+       _MCAccep += 1.0;
 
        for (int id=0;id<MCSettings::NDIM;id++)       // save accepted configuration
        MCCoords[id][gatom] = newcoords[id][gatom];
@@ -58,7 +63,7 @@ void MCMove(MCSettings mcSettings, std::shared_ptr<RNDGenerator> rnd, std::share
   }   // END sum over atoms (fixed atom type)
 }
 
-double MCPot(int atom0, double **pos, std::shared_ptr<Potential> pot)
+double MCMover::MCPot(int atom0, double **pos)
 {   
    double dr[MCSettings::NDIM];
    double spot =  0.0;
@@ -73,7 +78,11 @@ double MCPot(int atom0, double **pos, std::shared_ptr<Potential> pot)
           dr2    += (dr[id]*dr[id]);
        }
        double r = sqrt(dr2);
-       spot += pot -> SPot1D(r);    // 1D interaction
+       spot += _pot -> SPot1D(r);    // 1D interaction
     }
     return (spot);
+}
+
+double MCMover::getAccRatio() {
+  return _MCAccep/_MCTotal;
 }

@@ -69,7 +69,6 @@ private:
   int _mcSkipAverg;     //  to evaluate averages
 
   void MCMemAlloc(void);
-  void MCMemFree(void);  // free memory for destructor
-
+  void MCMemFree(void); 
 };
 #endif

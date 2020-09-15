@@ -6,10 +6,17 @@
 class RNDGenerator;
 class Potential;
 
-extern double MCTotal;
-extern double MCAccep;
-
-void MCMove(MCSettings, std::shared_ptr<RNDGenerator>, std::shared_ptr<Potential>);
-double MCPot(int,double **, std::shared_ptr<Potential>);
-
+class MCMover{
+public:
+  MCMover(MCSettings, std::shared_ptr<RNDGenerator>, std::shared_ptr<Potential>);
+  void MCMove();
+  double MCPot(int,double **);
+  double getAccRatio();
+private:
+  double _MCTotal;
+  double _MCAccep;
+  MCSettings _mcSettings;
+  std::shared_ptr<RNDGenerator> _rnd;
+  std::shared_ptr<Potential> _pot;
+};
 #endif

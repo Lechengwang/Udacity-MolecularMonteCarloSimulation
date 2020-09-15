@@ -29,7 +29,7 @@ fstream _feng;      // save accumulated energy
 const double rtest = 2.9654;
 #endif
 void MCGetAverage(std::shared_ptr<MCEstim>);
-void SaveAcceptRatio(long int,long int);
+void SaveAcceptRatio(long int,long int,double);
 void SaveSumEnergy(double,double);
 void SaveBlockAverages(long int);
 void SaveEnergy(const char [],double,int);
@@ -48,8 +48,7 @@ int main()
  vtest=pot->SPot1D(rtest);
  cout<<rtest<<BLANK<<vtest<<endl;
 #endif
- MCTotal=0.0;
- MCAccep=0.0;
+ MCMover mcMover(mcSettings, rnd, pot);
  // make_unique not work in c++11
  std::shared_ptr<MCEstim> estim = std::make_shared<MCEstim>(pot);
  InitTotalAverage();
@@ -65,7 +64,7 @@ int main()
 
    while (StepCount++ < mcSettings.getNumberOfMCSteps())
    {
-     MCMove(mcSettings, rnd, pot);
+     mcMover.MCMove();
 
      if (blockCount>mcSettings.getNumberOfEQBlocks())        // skip equilibration steps
      {
@@ -80,7 +79,7 @@ int main()
        }
      }
      if (StepCount % mcSettings.getMCSkipRatio() == 0)
-     SaveAcceptRatio(StepCount,blockCount);
+     SaveAcceptRatio(StepCount,blockCount, mcMover.getAccRatio());
    }//End Steps
    if (blockCount>mcSettings.getNumberOfEQBlocks())   // skip equilibration steps
        SaveBlockAverages(blockCount);
@@ -106,14 +105,13 @@ void MCGetAverage(std::shared_ptr<MCEstim> estim)
   _pot_total  += spot;
 }
 
-void SaveAcceptRatio(long int step,long int block)
+void SaveAcceptRatio(long int step,long int block, double ratio_molec)
 {
    int w = 8;
 
    cout << "BLOCK:" << setw(w) << block << BLANK;
    cout << "STEP:"  << setw(w) << step  << BLANK;
 
-   double ratio_molec = MCAccep/MCTotal;
    cout<<setw(w)<<MCAtom.type<<BLANK; // atom type
    cout<<setw(w)<<ratio_molec<<BLANK;       // accept ratio for "molecular" move
    cout<<endl;
