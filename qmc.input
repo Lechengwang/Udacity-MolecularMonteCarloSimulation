@@ -6,8 +6,8 @@ TEMPERATURE  0.5
 # [atom][steplength][pot]  [positionsfilename] 
 ATOM H2 0.2        parah2 h2matrix.pos
 NUMBEROFSTEPS 200000
-NUMBEROFBLOCKS 50 0
-SKIP_RATIO     50000        # CA save information regarding accept ratio
-SKIP_TOTAL     50000        # CA save accumulated average
-SKIP_AVERG     10           # CA evaluate averages
+NUMBEROFBLOCKS 50 1
+MCSKIP_RATIO     50000        # CA save information regarding accept ratio
+MCSKIP_TOTAL     50000        # CA save accumulated average
+MCSKIP_AVERG     10           # CA evaluate averages
 
