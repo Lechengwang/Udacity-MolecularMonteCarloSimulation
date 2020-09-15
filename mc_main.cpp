@@ -28,7 +28,7 @@ fstream _feng;      // save accumulated energy
 #ifdef POTTEST
 const double rtest = 2.9654;
 #endif
-void MCGetAverage(void);
+void MCGetAverage(std::shared_ptr<Potential>);
 void SaveAcceptRatio(long int,long int);
 void SaveSumEnergy(double,double);
 void SaveBlockAverages(long int);
@@ -43,9 +43,9 @@ int main()
  // Only one random number generator is enough
  std::shared_ptr<RNDGenerator> rnd = std::make_shared<RNDGenerator>(0,1);
  mcSettings.MCConfigInit();
- InitPotentials();
+ std::shared_ptr<Potential> pot = std::make_shared<Potential>();
 #ifdef POTTEST
- vtest=SPot1D(rtest);
+ vtest=pot->SPot1D(rtest);
  cout<<rtest<<BLANK<<vtest<<endl;
 #endif
  MCTotal=0.0;
@@ -64,13 +64,13 @@ int main()
 
    while (StepCount++ < mcSettings.getNumberOfMCSteps())
    {
-     MCMove(mcSettings, rnd);
+     MCMove(mcSettings, rnd, pot);
 
      if (blockCount>mcSettings.getNumberOfEQBlocks())        // skip equilibration steps
      {
               // evaluate averages
        if (StepCount % mcSettings.getMCSkipAverg() == 0)   // skip correlated configurations
-         MCGetAverage();
+         MCGetAverage(pot);
 
        if (StepCount % mcSettings.getMCSkipTotal() == 0)
        {
@@ -93,12 +93,12 @@ int main()
  }//End Blocks
 }
 
-void MCGetAverage(void)
+void MCGetAverage(std::shared_ptr<Potential> pot)
 {
    avergCount += 1.0;
    totalCount += 1.0;
 
-   double spot = SinglePot_Density(); // pot energy and density distributions
+   double spot = SinglePot_Density(pot); // pot energy and density distributions
 
   _bpot += spot;  // block average for pot energy
 

@@ -5,10 +5,31 @@
 #include "mc_setup.h"
 #include "mc_utils.h"
 
-void     InitPotentials(void);
-double   SPot1D(double);
-int  get_filesize (const char []);
+int get_filesize(const char []);
 
-const char EXT_POT[] = ".pot";
+class Potential {
+public:
+  Potential();
+  ~Potential();
+  // Getting potential at any position by spline
+  double SPot1D(double);
+private:
+  void read_datafile(const char [],double *,double *);
+
+// ---- POTENTIALS, interaction energy between 2 atoms/molecules----
+// 1D
+  double * _poten1D; // tabulated 1D potentials
+  double * _pgrid1D; // grids for 1D potentials
+  double * _pderiv2; // second derives for spline
+
+  int      _psize1D; // number of grid points for 1D potential
+  double   drgrid;
+
+  double   _alpha;    // parameters for u0e^(-alpha*r) extrapolation
+  double   _unode;    // of the potential
+  double   _c6;    // -C6/r^6
+
+  const std::string EXT_POT = ".pot";
+};
 
 #endif  // mc_poten.h

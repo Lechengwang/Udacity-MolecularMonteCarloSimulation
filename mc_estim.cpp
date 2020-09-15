@@ -84,7 +84,7 @@ void Fix_Density(void)
    
 }
 
-double SinglePot_Density(void)
+double SinglePot_Density(std::shared_ptr<Potential> pot)
 {
   const char *_proc_=__func__; //  SinglePot_Density()
 
@@ -109,7 +109,7 @@ double SinglePot_Density(void)
 
          double r = sqrt(dr2);
          bin_1Ddensity (r);
-         spot += SPot1D(r);
+         spot += pot -> SPot1D(r);
     }
   }
 // Pot and density of Moving-Moving pairs
@@ -128,7 +128,7 @@ double SinglePot_Density(void)
 
          double r = sqrt(dr2);
          bin_1Ddensity (r);
-         spot += SPot1D(r);
+         spot += pot -> SPot1D(r);
     }
   }
   return (spot);

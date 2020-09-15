@@ -14,7 +14,7 @@ using namespace mcsimulation;
 double MCTotal;
 double MCAccep;
 
-void MCMove(MCSettings mcSettings, std::shared_ptr<RNDGenerator> rnd)
+void MCMove(MCSettings mcSettings, std::shared_ptr<RNDGenerator> rnd, std::shared_ptr<Potential> pot)
 {
   int numb=NumbMoveAtoms;
   double disp[MCSettings::NDIM];
@@ -40,7 +40,7 @@ void MCMove(MCSettings mcSettings, std::shared_ptr<RNDGenerator> rnd)
     }
 
     double deltav = 0.0;         // ACCEPT/REJECT
-    deltav += (MCPot(gatom,newcoords)-MCPot(gatom,MCCoords));
+    deltav += (MCPot(gatom,newcoords, pot)-MCPot(gatom,MCCoords, pot));
     bool Accepted = false;
 
     if (deltav<0.0)             Accepted = true;
@@ -58,7 +58,7 @@ void MCMove(MCSettings mcSettings, std::shared_ptr<RNDGenerator> rnd)
   }   // END sum over atoms (fixed atom type)
 }
 
-double MCPot(int atom0, double **pos)
+double MCPot(int atom0, double **pos, std::shared_ptr<Potential> pot)
 {   
    double dr[MCSettings::NDIM];
    double spot =  0.0;
@@ -73,7 +73,7 @@ double MCPot(int atom0, double **pos)
           dr2    += (dr[id]*dr[id]);
        }
        double r = sqrt(dr2);
-       spot += SPot1D(r);    // 1D interaction
+       spot += pot -> SPot1D(r);    // 1D interaction
     }
     return (spot);
 }

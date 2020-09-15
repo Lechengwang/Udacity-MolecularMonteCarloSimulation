@@ -11,23 +11,9 @@
 
 using namespace mcsimulation;
 
-// ----------- POTENTIALS ----------------------------------
-// 1D
-double * _poten1D; // tabulated 1D potentials
-double * _pgrid1D; // grids for 1D potentials
-double * _pderiv2; // second derives for spline
-
-int      _psize1D; // number of grid points for 1D potential
-double   drgrid;
-
-double   _alpha;    // parameters for u0e^(-alpha*r) extrapolation
-double   _unode;    // of the potential
-double   _c6;    // -C6/r^6
-
-void read_datafile(const char [],double *,double *);
-
-void InitPotentials(void)
+Potential::Potential()
 {
+   std::cout << "Initializing potentials..." << std::endl;
    string fextn;
    fextn=EXT_POT;
    string fname=(MCAtom.fpot + fextn);
@@ -64,7 +50,14 @@ void InitPotentials(void)
    _c6 =  fr/(1.0/r0-1.0/r1);
 }
 
-double SPot1D(double r)
+Potential::~Potential() {
+  std::cout << "Potential Destructor called" << std::endl;
+  delete _poten1D;
+  delete _pgrid1D;
+  delete _pderiv2;
+}
+
+double Potential::SPot1D(double r)
 {
    int size = _psize1D;
  
@@ -108,7 +101,7 @@ int get_filesize(const char fname [])
 // fid.seekg(0,ios::beg);
 }
 
-void read_datafile(const char fname[],double *grid,double *data)
+void Potential::read_datafile(const char fname[],double *grid,double *data)
 //  fname:      first   column grid points 
 //	        second  column data points
 {
@@ -140,8 +133,8 @@ void read_datafile(const char fname[],double *grid,double *data)
 // nrerror(_proc_,"Wrong size of data file");
    fid.close();
 }
-
-void read_datafile(const char fname[],double *grid,double *data0,double *data1)
+/*
+void Potential::read_datafile(const char fname[],double *grid,double *data0,double *data1)
 //  fname:      first   column grid points 
 //	        second  column data points
 //	        third   column data points
@@ -177,3 +170,4 @@ void read_datafile(const char fname[],double *grid,double *data0,double *data1)
 // nrerror(_proc_,"Wrong size of data file");
    fid.close();
 }
+*/
