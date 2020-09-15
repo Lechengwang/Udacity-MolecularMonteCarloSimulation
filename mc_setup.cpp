@@ -23,7 +23,6 @@ int MCSKIP_TOTAL = 5000;    //  to save accumulated average
 int MCSKIP_AVERG = 10;      //  to evaluate averages
 
 TParticle MCAtom;
-int NDIM;
 int NumbAtoms;
 int NumbMoveAtoms;
 int NumbFixAtoms;
@@ -53,14 +52,14 @@ double MCSettings::getTemperature() {
 
 void MCMemAlloc(void)  // allocate  memmory 
 {
-  MCCoords    = doubleMatrix (NDIM,NumbAtoms);
-  iniMCCoords = doubleMatrix (NDIM,NumbAtoms);
-  optMCCoords = doubleMatrix (NDIM,NumbAtoms);
-  newcoords   = doubleMatrix (NDIM,NumbAtoms);
+  MCCoords    = doubleMatrix (MCSettings::NDIM,NumbAtoms);
+  iniMCCoords = doubleMatrix (MCSettings::NDIM,NumbAtoms);
+  optMCCoords = doubleMatrix (MCSettings::NDIM,NumbAtoms);
+  newcoords   = doubleMatrix (MCSettings::NDIM,NumbAtoms);
   Moving      = new int [NumbAtoms]; // Moving[i]=0->fixed,other->relaxed
   IMoving     = new int [NumbAtoms]; // The ID of moving H2 in MCCoords
   IFix        = new int [NumbAtoms];
-//  cout<<"mem alloc done"<<BLANK<<NDIM<<endl;
+//  cout<<"mem alloc done"<<BLANK<<MCSettings::NDIM<<endl;
 }
 
 
@@ -104,7 +103,7 @@ void MCConfigInit(void)
          IFix[NumbFixAtoms]=i;
          NumbFixAtoms++;
       }
-      for(int j=0;j<NDIM;j++)      
+      for(int j=0;j<MCSettings::NDIM;j++)      
       MCCoords[j][i]=iniMCCoords[j][i];
    }
    //for dumping

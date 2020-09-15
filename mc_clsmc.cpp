@@ -15,14 +15,14 @@ double MCAccep;
 void MCMove(MCSettings mcSettings)
 {
   int numb=NumbMoveAtoms;
-  double disp[NDIM];
+  double disp[MCSettings::NDIM];
   for(int atom=0;atom<numb;atom++)
   {
     int gatom=IMoving[atom];
     #ifdef coodstest
     cout<<"Moving : "<<gatom<<endl;
     #endif
-    for (int id=0;id<NDIM;id++)   // MOVE
+    for (int id=0;id<MCSettings::NDIM;id++)   // MOVE
     {
        disp[id] = MCAtom.mcstep*(rnd1()-0.5);
        #ifdef coodstest
@@ -50,7 +50,7 @@ void MCMove(MCSettings mcSettings)
     {
        MCAccep += 1.0;
 
-       for (int id=0;id<NDIM;id++)       // save accepted configuration
+       for (int id=0;id<MCSettings::NDIM;id++)       // save accepted configuration
        MCCoords[id][gatom] = newcoords[id][gatom];
     }
   }   // END sum over atoms (fixed atom type)
@@ -58,14 +58,14 @@ void MCMove(MCSettings mcSettings)
 
 double MCPot(int atom0, double **pos)
 {   
-   double dr[NDIM];
+   double dr[MCSettings::NDIM];
    double spot =  0.0;
 
    for (int atom1=0;atom1<NumbAtoms;atom1++)
    if (atom1 != atom0)                      // skip "self-interaction"
    {
        double dr2 = 0.0;
-       for (int id=0;id<NDIM;id++)
+       for (int id=0;id<MCSettings::NDIM;id++)
        {
           dr[id]  = (pos[id][atom0] - MCCoords[id][atom1]);
           dr2    += (dr[id]*dr[id]);

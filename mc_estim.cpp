@@ -39,7 +39,7 @@ void Fix_Density(void)
    const char *_proc_=__func__; //  SinglePot_Density()
 
 
-   double dr[NDIM];
+   double dr[MCSettings::NDIM];
    double spot = 0.0;
 
    for (int iatom0=0;iatom0<(NumbFixAtoms-1);iatom0++)
@@ -49,7 +49,7 @@ void Fix_Density(void)
      {
          int atom1=IFix[iatom1];
          double dr2 = 0.0;
-         for (int id=0;id<NDIM;id++)
+         for (int id=0;id<MCSettings::NDIM;id++)
          {
             dr[id]  = (iniMCCoords[id][atom0] - iniMCCoords[id][atom1]);
             dr2    += (dr[id]*dr[id]);
@@ -87,7 +87,7 @@ double SinglePot_Density(void)
   const char *_proc_=__func__; //  SinglePot_Density()
 
 
-  double dr[NDIM];
+  double dr[MCSettings::NDIM];
   double spot = 0.0;
 
 // Pot and density of Moving-Fix pairs
@@ -99,7 +99,7 @@ double SinglePot_Density(void)
     {
          int atom1=IFix[iatom1];
          double dr2 = 0.0;
-         for (int id=0;id<NDIM;id++)
+         for (int id=0;id<MCSettings::NDIM;id++)
          {
             dr[id]  = (MCCoords[id][atom0] - MCCoords[id][atom1]);
             dr2    += (dr[id]*dr[id]);
@@ -118,7 +118,7 @@ double SinglePot_Density(void)
     {
          int atom1=IMoving[iatom1];
          double dr2 = 0.0;
-         for (int id=0;id<NDIM;id++)
+         for (int id=0;id<MCSettings::NDIM;id++)
          {
             dr[id]  = (MCCoords[id][atom0] - MCCoords[id][atom1]);
             dr2    += (dr[id]*dr[id]);

@@ -6,14 +6,19 @@
 
 class MCSettings {
 public:
+  // Setters
   void setTemperature(double);
+
+  // Getters
   double getTemperature();
+
+  // Some constants
+  // Dimensions. We are living in 3D space so it is 3
+  static const int NDIM = 3;
 private:
   double _temperature;
 };
 
-extern double Temperature;
-extern int    NDIM;
 extern long int NumberOfMCSteps;
 extern long int NumberOfMCBlocks;
 extern long int NumberOfEQBlocks;

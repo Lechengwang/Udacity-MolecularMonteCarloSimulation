@@ -29,7 +29,6 @@ void IOReadParams(const char in_file[], MCSettings &settings)
 {
    const char *_proc_=__func__;    // "MCReadInput()"; 
 
-   NDIM=3;
    string params;
    ifstream inf(in_file,ios::in);
    if (!inf.good())
