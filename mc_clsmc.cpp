@@ -9,6 +9,8 @@
 
 // #define coodstest 1
 
+using namespace mcsimulation;
+
 double MCTotal;
 double MCAccep;
 

@@ -11,6 +11,8 @@
 // #define fixdebug 1
 // #define relaxdensity 1
 
+using namespace mcsimulation;
+
 const int MC_BINSR=10000;
 const double MIN_RADIUS=0.0;
 const double MAX_RADIUS=100.0;

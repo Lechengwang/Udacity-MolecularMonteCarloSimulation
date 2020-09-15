@@ -15,6 +15,7 @@
 //#define FNAMETEST 1
 //#define POTTEST 1
 
+using namespace mcsimulation;
 
 double avergCount;   // # of calls of get_estim inside a block
 double totalCount;   // sum avergCount  
@@ -40,7 +41,7 @@ int main()
  IOReadParams(FINPUT, mcSettings);
  // Only one random number generator is enough
  RandomInit(0,1);
- MCConfigInit();
+ mcSettings.MCConfigInit();
  InitPotentials();
 #ifdef POTTEST
  vtest=SPot1D(rtest);

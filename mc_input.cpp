@@ -10,6 +10,8 @@
 #include "mc_poten.h"
 #include "mc_setup.h"
 
+using namespace mcsimulation;
+
 const char IO_OUTPUTDIR[]      = "OUTPUTDIR";
 const char IO_FILENAMEPREFIX[] = "FILENAMEPREFIX";
 const char IO_TEMPERATURE[]    = "TEMPERATURE";

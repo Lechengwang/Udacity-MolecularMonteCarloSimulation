@@ -14,21 +14,25 @@
 
 //#define POSTEST 1
 
-TParticle MCAtom;
-int NumbAtoms;
-int NumbMoveAtoms;
-int NumbFixAtoms;
-
-int * IMoving;        // the id of moving atoms
-int * IFix;
-int * Moving;
-double ** MCCoords;   // translational degrees of freedom
-double ** iniMCCoords;
-double ** optMCCoords;
-double ** newcoords;  // buffer for new coordinates
+using namespace mcsimulation;
 
 const char IO_RELAX [] = "RELAX";
 const char IO_FIX   [] = "FIX";
+
+// namespace variables
+namespace mcsimulation {
+  TParticle MCAtom;
+  int NumbAtoms;
+  int NumbMoveAtoms;
+  int NumbFixAtoms;
+  double ** MCCoords;
+  double ** iniMCCoords;
+  double ** optMCCoords;
+  double ** newcoords;
+  int * Moving;
+  int * IMoving;
+  int * IFix;
+}
 
 // Member methods: setters
 
@@ -90,7 +94,7 @@ int MCSettings::getMCSkipAverg() {
   return _mcSkipAverg;
 }
 
-void MCMemAlloc(void)  // allocate  memmory 
+void MCSettings::MCMemAlloc(void)  // allocate  memmory 
 {
   MCCoords    = doubleMatrix (MCSettings::NDIM,NumbAtoms);
   iniMCCoords = doubleMatrix (MCSettings::NDIM,NumbAtoms);
@@ -103,8 +107,9 @@ void MCMemAlloc(void)  // allocate  memmory
 }
 
 
-void MCMemFree(void)  //  free memory
+void MCSettings::MCMemFree(void)  //  free memory
 {
+   std::cout <<"Calling destructor" << std::endl;
    free_doubleMatrix(MCCoords);
    free_doubleMatrix(newcoords);
    free_doubleMatrix(optMCCoords);
@@ -114,7 +119,7 @@ void MCMemFree(void)  //  free memory
    delete IMoving;
 }
 
-void MCConfigInit(void)
+void MCSettings::MCConfigInit(void)
 {
    int * id; //for dumping only
    string relaxflag;

@@ -9,6 +9,8 @@
 #include <fstream>
 #include <iomanip>
 
+using namespace mcsimulation;
+
 // ----------- POTENTIALS ----------------------------------
 // 1D
 double * _poten1D; // tabulated 1D potentials
