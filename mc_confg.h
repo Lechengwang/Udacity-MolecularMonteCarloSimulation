@@ -13,6 +13,4 @@ const char FBACKUP_EXTENSION[]=".old";
 const char COMMENTS[] = "#";        // comment line in output files
 const char BLANK[]    = "   ";      // spacing between columns
 
-const int MPI_MASTER = 0;  // MPI id for the root process 
-
 #endif  // mc_confg.h

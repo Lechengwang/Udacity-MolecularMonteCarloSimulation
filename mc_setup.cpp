@@ -25,14 +25,10 @@ int * Moving;
 double ** MCCoords;   // translational degrees of freedom
 double ** iniMCCoords;
 double ** optMCCoords;
-double minieng;
 double ** newcoords;  // buffer for new coordinates
 
 const char IO_RELAX [] = "RELAX";
 const char IO_FIX   [] = "FIX";
-
-int MPIsize;
-int MPIrank;
 
 // Member methods: setters
 

@@ -36,11 +36,10 @@ void InitTotalAverage(void);
 int main()
 {
  double vtest;
- MPIsize = 1;            // this is for InitRandom()          
- MPIrank = MPI_MASTER;   // this is for InitRandom() 
  MCSettings mcSettings;
  IOReadParams(FINPUT, mcSettings);
- RandomInit(MPIrank,MPIsize);
+ // Only one random number generator is enough
+ RandomInit(0,1);
  MCConfigInit();
  InitPotentials();
 #ifdef POTTEST
