@@ -5,8 +5,8 @@
 #include <string>
 
 namespace mcsimulation {
-// Those data structure is heavily used in simulation. Organize them into namespace
-// Grant direct access to those data structure to avoid overhead of getter/setters
+// Those data structures are heavily used in simulation. Organize them into namespace
+// Grant direct access to those data structures to avoid overhead of getter/setters
   typedef struct TParticle
   {
    int    numb;            //  numb of atoms in 1D

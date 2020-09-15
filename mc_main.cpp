@@ -2,6 +2,7 @@
 #include <sstream>
 #include <iomanip>
 #include <math.h>
+#include <memory>
 
 #include "mc_input.h"
 #include "mc_estim.h"
@@ -40,7 +41,7 @@ int main()
  MCSettings mcSettings;
  mcSettings.IOReadParams(FINPUT);
  // Only one random number generator is enough
- RandomInit(0,1);
+ std::shared_ptr<RNDGenerator> rnd = std::make_shared<RNDGenerator>(0,1);
  mcSettings.MCConfigInit();
  InitPotentials();
 #ifdef POTTEST
@@ -63,7 +64,7 @@ int main()
 
    while (StepCount++ < mcSettings.getNumberOfMCSteps())
    {
-     MCMove(mcSettings);
+     MCMove(mcSettings, rnd);
 
      if (blockCount>mcSettings.getNumberOfEQBlocks())        // skip equilibration steps
      {
@@ -90,8 +91,6 @@ int main()
    string fname1 = FNPrefix + bc.str();
    SaveDensities1D    (fname1.c_str(),totalCount);
  }//End Blocks
-
- 
 }
 
 void MCGetAverage(void)

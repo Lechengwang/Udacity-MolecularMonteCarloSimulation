@@ -1,6 +1,6 @@
 #.SUFFIXES: .o .cxx
 
-options= -O3
+options= --std=c++11
 
 MYDIR=./
 

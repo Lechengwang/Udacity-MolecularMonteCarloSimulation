@@ -3,94 +3,91 @@
 #include <ctime>
 #include <cstdlib>
 
-int SEED;
-
 #include "sprng.h"	
 
 #include "mc_input.h"
 #include "mc_randg.h"
 #include "mc_utils.h"
 	
-const int MAXGENS=15;  // max number of rnd generators [gauss #8,9 N,M #>=10]
-int *STREAM[MAXGENS];  // rnd numbers streams
 
-
-void RandomInit(int mpi_id, int max_mpi_procs)  // sprng init
-{            
+RNDGenerator::RNDGenerator(int mpi_id, int max_mpi_procs)  // sprng init
+{ 
+  std::cout <<"RNDGenerator constructor called." << std::endl;
   int max_streams=MAXGENS*max_mpi_procs;        // number of streams 
            
   srand(time(0));       //seed
-  SEED = rand()%1000000000;        //seed for PIMC,seed is (1,1000000000)
+  _seed = rand()%1000000000;        //seed for PIMC,seed is (1,1000000000)
 
-  cout<<"The random seed for this work is: "<<SEED<<endl;
+  cout<<"The random seed for this work is: "<<_seed<<endl;
 
   for (int ip=0;ip<MAXGENS;ip++)
   { 
      int streamnum = mpi_id*MAXGENS+ip;
-     STREAM[ip] = init_sprng(streamnum,max_streams,SEED,SPRNG_DEFAULT); // initialize stream 
+     _stream[ip] = init_sprng(streamnum,max_streams,_seed,SPRNG_DEFAULT); // initialize stream 
 //   print_sprng(stream);	
   }
 }
 
-void RandomFree(void) // free memory used by sprng 
+RNDGenerator::~RNDGenerator() // free memory used by sprng 
 {
+  std::cout << "RND Destructor called." << std::endl;
   for (int ip=0;ip<MAXGENS;ip++)
-  free_sprng(STREAM[ip]);     
+    free_sprng(_stream[ip]);     
 }
 
-double rnd(void)
+double RNDGenerator::rnd()
 // double random number generator in the range [0,1] 
 {
-  return sprng(STREAM[0]);
+  return sprng(_stream[0]);
 }
 
-double rnd1(void)
+double RNDGenerator::rnd1()
 // double random number generator in the range [0,1] 
 {
-  return sprng(STREAM[1]);
+  return sprng(_stream[1]);
 }
 
-double rnd2(void)
+double RNDGenerator::rnd2()
 // double random number generator in the range [0,1] 
 {
-  return sprng(STREAM[2]);
+  return sprng(_stream[2]);
 }
 
-double rnd3(void)
+double RNDGenerator::rnd3()
 // double random number generator in the range [0,1] 
 {
-  return sprng(STREAM[3]);
+  return sprng(_stream[3]);
 }
 
-double rnd4(void)
+double RNDGenerator::rnd4()
 // double random number generator in the range [0,1] 
 {
-  return sprng(STREAM[4]);
+  return sprng(_stream[4]);
 }
 
-double rnd5(void)
+double RNDGenerator::rnd5()
 // double random number generator in the range [0,1] 
 {
-  return sprng(STREAM[5]);
+  return sprng(_stream[5]);
 }
 
-double rnd6(void)
+double RNDGenerator::rnd6()
 // double random number generator in the range [0,1] 
 {
-  return sprng(STREAM[6]);
+  return sprng(_stream[6]);
 }
 
-double rnd7(void)
+double RNDGenerator::rnd7()
 // double random number generator in the range [0,1] 
 {
-  return sprng(STREAM[7]);
+  return sprng(_stream[7]);
 }
 
-double gauss(double alpha)
+double RNDGenerator::gauss(double alpha)
 // random numbers according Gaussian distribution exp{-alpha*x^2}
 {
-    double r1 = sprng(STREAM[8]);
-    double r2 = sprng(STREAM[9]);
+    double r1 = sprng(_stream[8]);
+    double r2 = sprng(_stream[9]);
 
     double x1 = sqrt(-log(r1))*cos(2.0*M_PI*r2);
 
@@ -100,26 +97,26 @@ double gauss(double alpha)
     return (x1/sqrt(alpha));
 }
 
-int nrnd1(int n)
+int RNDGenerator::nrnd1(int n)
 // integer random number generator in the range [0,n-1] 
 {
-  return (int)floor(n*sprng(STREAM[10]));
+  return (int)floor(n*sprng(_stream[10]));
 }
 
-int nrnd2(int n)
+int RNDGenerator::nrnd2(int n)
 // integer random number generator in the range [0,n-1] 
 {
-  return (int)floor(n*sprng(STREAM[11]));
+  return (int)floor(n*sprng(_stream[11]));
 }
 
-int nrnd3(int n)
+int RNDGenerator::nrnd3(int n)
 // integer random number generator in the range [0,n-1] 
 {
-  return (int)floor(n*sprng(STREAM[12]));
+  return (int)floor(n*sprng(_stream[12]));
 }
 
-int nrnd4(int n)
+int RNDGenerator::nrnd4(int n)
 // integer random number generator in the range [0,n-1] 
 {
-  return (int)floor(n*sprng(STREAM[13]));
+  return (int)floor(n*sprng(_stream[13]));
 }

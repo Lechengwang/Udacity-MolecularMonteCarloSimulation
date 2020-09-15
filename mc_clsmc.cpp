@@ -14,7 +14,7 @@ using namespace mcsimulation;
 double MCTotal;
 double MCAccep;
 
-void MCMove(MCSettings mcSettings)
+void MCMove(MCSettings mcSettings, std::shared_ptr<RNDGenerator> rnd)
 {
   int numb=NumbMoveAtoms;
   double disp[MCSettings::NDIM];
@@ -26,7 +26,7 @@ void MCMove(MCSettings mcSettings)
     #endif
     for (int id=0;id<MCSettings::NDIM;id++)   // MOVE
     {
-       disp[id] = MCAtom.mcstep*(rnd1()-0.5);
+       disp[id] = MCAtom.mcstep*(rnd->rnd1()-0.5);
        #ifdef coodstest
        cout<<"Offset : "<<disp[id]<<endl;
        #endif
@@ -45,7 +45,7 @@ void MCMove(MCSettings mcSettings)
 
     if (deltav<0.0)             Accepted = true;
     else if
-    (exp(-deltav/mcSettings.getTemperature())>rnd2()) Accepted = true;
+    (exp(-deltav/mcSettings.getTemperature())>rnd->rnd2()) Accepted = true;
 
     MCTotal+= 1.0;
     if (Accepted)
