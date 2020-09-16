@@ -23,10 +23,8 @@ namespace mcsimulation {
 
   extern double ** MCCoords;   // translational degrees of freedom
   extern double ** iniMCCoords;// initial configuration of beads
-  extern double ** optMCCoords;// translational degrees of freedom of lowest energy during annealing
 
   extern double ** newcoords;  // buffer for new coordinates
-  extern int * Moving;
   extern int * IMoving;
   extern int * IFix;
 }
