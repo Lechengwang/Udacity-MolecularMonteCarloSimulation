@@ -24,7 +24,7 @@ MCEstim::~MCEstim() {
 }
 
 
-double MCEstim::SinglePot_Density(double ** MCCoords)
+double MCEstim::SinglePot_Density(double ** MCCoords, int * IFix, int * IMoving)
 {
   const char *_proc_=__func__; //  SinglePot_Density()
 

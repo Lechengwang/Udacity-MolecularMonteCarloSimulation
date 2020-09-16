@@ -11,7 +11,7 @@
 
 using namespace mcsimulation;
 
-MCMover::MCMover(MCSettings mcSettings, std::shared_ptr<RNDGenerator> rnd, std::shared_ptr<Potential> pot, double ** iniMCCoords) {
+MCMover::MCMover(std::shared_ptr<MCSettings> mcSettings, std::shared_ptr<RNDGenerator> rnd, std::shared_ptr<Potential> pot) {
   std::cout << "MCMover is initializing" << std::endl;
   _MCTotal = 0;
   _MCAccep = 0;
@@ -20,6 +20,7 @@ MCMover::MCMover(MCSettings mcSettings, std::shared_ptr<RNDGenerator> rnd, std::
   _pot = pot;
   _MCCoords = doubleMatrix(MCSettings::NDIM, NumbAtoms);
   _newcoords = doubleMatrix(MCSettings::NDIM, NumbAtoms);
+  double ** iniMCCoords = _mcSettings -> getIniMCCoords();
   for (int i = 0; i < NumbAtoms; i ++)
     for (int j = 0; j < MCSettings::NDIM; j ++)
         _MCCoords[j][i] = iniMCCoords[j][i];
@@ -35,6 +36,7 @@ void MCMover::MCMove()
 {
   int numb=NumbMoveAtoms;
   double disp[MCSettings::NDIM];
+  int * IMoving = _mcSettings -> getIMoving();
   for(int atom=0;atom<numb;atom++)
   {
     int gatom=IMoving[atom];
@@ -62,7 +64,7 @@ void MCMover::MCMove()
 
     if (deltav<0.0)             Accepted = true;
     else if
-    (exp(-deltav/_mcSettings.getTemperature())>_rnd->rnd2()) Accepted = true;
+    (exp(-deltav/_mcSettings -> getTemperature())>_rnd->rnd2()) Accepted = true;
 
     _MCTotal+= 1.0;
     if (Accepted)

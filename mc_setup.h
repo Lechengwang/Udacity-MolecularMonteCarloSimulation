@@ -7,6 +7,7 @@
 namespace mcsimulation {
 // Those data structures are heavily read (won't change) in simulation. Organize them into namespace
 // Grant direct access to those data structures to avoid overhead of getter/setters
+// This is a balance between OOD encapsulation and efficiency
   typedef struct TParticle
   {
    int    numb;            //  numb of atoms in 1D
@@ -20,14 +21,12 @@ namespace mcsimulation {
   extern int NumbAtoms;
   extern int NumbMoveAtoms;
   extern int NumbFixAtoms;
-
-  extern double ** iniMCCoords;// initial configuration of beads
-  extern int * IMoving;
-  extern int * IFix;
 }
 
 class MCSettings {
 public:
+  MCSettings();
+  ~MCSettings();
   // Setters
   void setTemperature(double);
   void setNumberOfMCSteps(long int);
@@ -45,6 +44,9 @@ public:
   int getMCSkipRatio();
   int getMCSkipTotal();
   int getMCSkipAverg();
+  double ** getIniMCCoords();
+  int * getIMoving();
+  int * getIFix();
 
   // Some constants
   // Dimensions. We are living in 3D space so it is 3
@@ -63,7 +65,8 @@ private:
   int _mcSkipTotal;     //  to save accumulated average
   int _mcSkipAverg;     //  to evaluate averages
 
-  void MCMemAlloc(void);
-  void MCMemFree(void); 
+  double ** _iniMCCoords;
+  int * _IMoving;
+  int * _IFix;
 };
 #endif

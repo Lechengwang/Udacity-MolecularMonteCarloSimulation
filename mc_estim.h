@@ -10,7 +10,7 @@ class MCEstim {
 public:
   MCEstim(std::shared_ptr<Potential>);
   ~MCEstim();
-  double SinglePot_Density(double **);
+  double SinglePot_Density(double **, int *, int *);
 private:
   std::shared_ptr<Potential> _pot;
 };

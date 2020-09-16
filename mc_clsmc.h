@@ -5,10 +5,11 @@
 
 class RNDGenerator;
 class Potential;
+class MCSettings;
 
 class MCMover{
 public:
-  MCMover(MCSettings, std::shared_ptr<RNDGenerator>, std::shared_ptr<Potential>, double **);
+  MCMover(std::shared_ptr<MCSettings>, std::shared_ptr<RNDGenerator>, std::shared_ptr<Potential>);
   ~MCMover();
   void MCMove();
   double MCPot(int,double **);
@@ -17,7 +18,7 @@ public:
 private:
   double _MCTotal;
   double _MCAccep;
-  MCSettings _mcSettings;
+  std::shared_ptr<MCSettings> _mcSettings;
   std::shared_ptr<RNDGenerator> _rnd;
   std::shared_ptr<Potential> _pot;
   double ** _newcoords;

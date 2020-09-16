@@ -28,7 +28,7 @@ fstream _feng;      // save accumulated energy
 #ifdef POTTEST
 const double rtest = 2.9654;
 #endif
-void MCGetAverage(std::shared_ptr<MCEstim>, double **);
+void MCGetAverage(std::shared_ptr<MCEstim>, double **, int *, int *);
 void SaveAcceptRatio(long int,long int,double);
 void SaveSumEnergy(double,double);
 void SaveBlockAverages(long int);
@@ -38,59 +38,59 @@ void InitTotalAverage(void);
 int main()
 {
  double vtest;
- MCSettings mcSettings;
- mcSettings.IOReadParams(FINPUT);
+ std::shared_ptr<MCSettings> mcSettings = std::make_shared<MCSettings>();
+ mcSettings -> IOReadParams(FINPUT);
  // Only one random number generator is enough
  std::shared_ptr<RNDGenerator> rnd = std::make_shared<RNDGenerator>(0,1);
- mcSettings.MCConfigInit();
+ mcSettings -> MCConfigInit();
  std::shared_ptr<Potential> pot = std::make_shared<Potential>();
 #ifdef POTTEST
  vtest=pot->SPot1D(rtest);
  cout<<rtest<<BLANK<<vtest<<endl;
 #endif
- MCMover mcMover(mcSettings, rnd, pot, iniMCCoords);
+ MCMover mcMover(mcSettings, rnd, pot);
  // make_unique not work in c++11
  std::shared_ptr<MCEstim> estim = std::make_shared<MCEstim>(pot);
  InitTotalAverage();
  long int blockCount=0;
  double sumsCount=0.0;
- while (blockCount < mcSettings.getNumberOfMCBlocks())
+ while (blockCount < mcSettings -> getNumberOfMCBlocks())
  {
    blockCount ++;
    avergCount = 0.0;
    _bpot = 0.0;
    long int StepCount = 0;        // BEGIN NEW MC PASS
 
-   while (StepCount++ < mcSettings.getNumberOfMCSteps())
+   while (StepCount++ < mcSettings -> getNumberOfMCSteps())
    {
      mcMover.MCMove();
 
-     if (blockCount>mcSettings.getNumberOfEQBlocks())        // skip equilibration steps
+     if (blockCount>mcSettings -> getNumberOfEQBlocks())        // skip equilibration steps
      {
               // evaluate averages
-       if (StepCount % mcSettings.getMCSkipAverg() == 0)   // skip correlated configurations
-         MCGetAverage(estim, mcMover.getMCCoords());
+       if (StepCount % mcSettings -> getMCSkipAverg() == 0)   // skip correlated configurations
+         MCGetAverage(estim, mcMover.getMCCoords(), mcSettings -> getIFix(), mcSettings -> getIMoving());
 
-       if (StepCount % mcSettings.getMCSkipTotal() == 0)
+       if (StepCount % mcSettings -> getMCSkipTotal() == 0)
        {
          sumsCount += 1.0;
          SaveSumEnergy (totalCount,sumsCount);
        }
      }
-     if (StepCount % mcSettings.getMCSkipRatio() == 0)
+     if (StepCount % mcSettings -> getMCSkipRatio() == 0)
      SaveAcceptRatio(StepCount,blockCount, mcMover.getAccRatio());
    }//End Steps
-   if (blockCount>mcSettings.getNumberOfEQBlocks())   // skip equilibration steps
+   if (blockCount>mcSettings -> getNumberOfEQBlocks())   // skip equilibration steps
        SaveBlockAverages(blockCount);
  }//End Blocks
 }
 
-void MCGetAverage(std::shared_ptr<MCEstim> estim, double ** MCCoords)
+void MCGetAverage(std::shared_ptr<MCEstim> estim, double ** MCCoords, int * IFix, int * IMoving)
 {
    avergCount += 1.0;
    totalCount += 1.0;
 
-   double spot = estim -> SinglePot_Density(MCCoords); // pot energy and density distributions
+   double spot = estim -> SinglePot_Density(MCCoords, IFix, IMoving); // pot energy and density distributions
 
   _bpot += spot;  // block average for pot energy
 

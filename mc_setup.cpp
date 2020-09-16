@@ -25,9 +25,6 @@ namespace mcsimulation {
   int NumbAtoms;
   int NumbMoveAtoms;
   int NumbFixAtoms;
-  double ** iniMCCoords;
-  int * IMoving;
-  int * IFix;
 }
 
 // Member methods: setters
@@ -90,22 +87,34 @@ int MCSettings::getMCSkipAverg() {
   return _mcSkipAverg;
 }
 
-void MCSettings::MCMemAlloc(void)  // allocate  memmory 
+double ** MCSettings::getIniMCCoords() {
+  return _iniMCCoords;
+}
+
+int * MCSettings::getIMoving() {
+  return _IMoving;
+}
+
+int * MCSettings::getIFix() {
+  return _IFix;
+}
+
+MCSettings::MCSettings()  // allocate  memmory 
 {
-  iniMCCoords = doubleMatrix (MCSettings::NDIM,NumbAtoms);
-  IMoving     = new int [NumbAtoms]; // The ID of moving H2 in MCCoords
-  IFix        = new int [NumbAtoms];
-//  cout<<"mem alloc done"<<BLANK<<MCSettings::NDIM<<endl;
+  std::cout << "MCSettings: allocating memory" << std::endl;
+  _iniMCCoords = doubleMatrix (MCSettings::NDIM,NumbAtoms);
+  _IMoving     = new int [NumbAtoms]; // The ID of moving H2 in MCCoords
+  _IFix        = new int [NumbAtoms];
 }
 
 
-void MCSettings::MCMemFree(void)  //  free memory
+MCSettings::~MCSettings()  //  free memory
 {
-   std::cout <<"Calling destructor" << std::endl;
-   free_doubleMatrix(iniMCCoords);
+   std::cout <<"MCSettings: Calling destructor" << std::endl;
+   free_doubleMatrix(_iniMCCoords);
 
-   delete IMoving;
-   delete IFix;
+   delete _IMoving;
+   delete _IFix;
 }
 
 void MCSettings::MCConfigInit(void)
@@ -118,21 +127,20 @@ void MCSettings::MCConfigInit(void)
    MCAtom.numb=na;
    NumbAtoms=na;
    cout<<"Total number of H2 is: "<<NumbAtoms<<endl;
-   MCMemAlloc();
    id = new int [NumbAtoms];
    NumbMoveAtoms=0;
    NumbFixAtoms =0;
    for(int i=0;i<NumbAtoms;i++)
    {
-      fid>>id[i]>>iniMCCoords[0][i]>>iniMCCoords[1][i]>>iniMCCoords[2][i]>>relaxflag;
+      fid>>id[i]>>_iniMCCoords[0][i]>>_iniMCCoords[1][i]>>_iniMCCoords[2][i]>>relaxflag;
       if(relaxflag==IO_RELAX) 
       {
-         IMoving[NumbMoveAtoms]=i;
+         _IMoving[NumbMoveAtoms]=i;
          NumbMoveAtoms++;
       }
       else if(relaxflag==IO_FIX)
       { 
-         IFix[NumbFixAtoms]=i;
+         _IFix[NumbFixAtoms]=i;
          NumbFixAtoms++;
       }
    }
@@ -140,14 +148,14 @@ void MCSettings::MCConfigInit(void)
    #ifdef POSTEST
    for(int j=0;j<NumbAtoms;j++)
    {
-     cout<<setw(8)<<iniMCCoords[0][j]<<BLANK;
-     cout<<setw(8)<<iniMCCoords[1][j]<<BLANK;
-     cout<<setw(8)<<iniMCCoords[2][j]<<BLANK;
+     cout<<setw(8)<<_iniMCCoords[0][j]<<BLANK;
+     cout<<setw(8)<<_iniMCCoords[1][j]<<BLANK;
+     cout<<setw(8)<<_iniMCCoords[2][j]<<BLANK;
    }
    for(int j=0;j<NumbMoveAtoms;j++)
-     cout<<setw(6)<<IMoving[j]<<endl;
+     cout<<setw(6)<<_IMoving[j]<<endl;
    for(int j=0;j<NumbFixAtoms;j++)
-     cout<<setw(6)<<IFix[j]<<endl;
+     cout<<setw(6)<<_IFix[j]<<endl;
    #endif
    cout<<"Total number of relaxing H2 is: "<<setw(6)<<NumbMoveAtoms<<endl;
    cout<<"Total number of fixed H2 is: "<<setw(6)<<NumbFixAtoms<<endl;
