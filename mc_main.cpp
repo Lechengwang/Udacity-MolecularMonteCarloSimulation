@@ -52,7 +52,6 @@ int main()
  // make_unique not work in c++11
  std::shared_ptr<MCEstim> estim = std::make_shared<MCEstim>(pot);
  InitTotalAverage();
- estim->Fix_Density();
  long int blockCount=0;
  double sumsCount=0.0;
  while (blockCount < mcSettings.getNumberOfMCBlocks())
@@ -83,13 +82,6 @@ int main()
    }//End Steps
    if (blockCount>mcSettings.getNumberOfEQBlocks())   // skip equilibration steps
        SaveBlockAverages(blockCount);
-   stringstream bc;                // convert block # to string
-   bc.width(IO_BLOCKNUMB_WIDTH);
-   bc.fill('0');
-   bc<<blockCount;
-
-   string fname1 = FNPrefix + bc.str();
-   estim->SaveDensities1D    (fname1.c_str(),totalCount);
  }//End Blocks
 }
 
