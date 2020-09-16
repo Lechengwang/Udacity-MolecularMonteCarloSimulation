@@ -25,9 +25,7 @@ namespace mcsimulation {
   int NumbAtoms;
   int NumbMoveAtoms;
   int NumbFixAtoms;
-  double ** MCCoords;
   double ** iniMCCoords;
-  double ** newcoords;
   int * IMoving;
   int * IFix;
 }
@@ -94,9 +92,7 @@ int MCSettings::getMCSkipAverg() {
 
 void MCSettings::MCMemAlloc(void)  // allocate  memmory 
 {
-  MCCoords    = doubleMatrix (MCSettings::NDIM,NumbAtoms);
   iniMCCoords = doubleMatrix (MCSettings::NDIM,NumbAtoms);
-  newcoords   = doubleMatrix (MCSettings::NDIM,NumbAtoms);
   IMoving     = new int [NumbAtoms]; // The ID of moving H2 in MCCoords
   IFix        = new int [NumbAtoms];
 //  cout<<"mem alloc done"<<BLANK<<MCSettings::NDIM<<endl;
@@ -106,8 +102,6 @@ void MCSettings::MCMemAlloc(void)  // allocate  memmory
 void MCSettings::MCMemFree(void)  //  free memory
 {
    std::cout <<"Calling destructor" << std::endl;
-   free_doubleMatrix(MCCoords);
-   free_doubleMatrix(newcoords);
    free_doubleMatrix(iniMCCoords);
 
    delete IMoving;
@@ -141,8 +135,6 @@ void MCSettings::MCConfigInit(void)
          IFix[NumbFixAtoms]=i;
          NumbFixAtoms++;
       }
-      for(int j=0;j<MCSettings::NDIM;j++)      
-      MCCoords[j][i]=iniMCCoords[j][i];
    }
    //for dumping
    #ifdef POSTEST

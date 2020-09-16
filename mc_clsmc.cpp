@@ -11,12 +11,24 @@
 
 using namespace mcsimulation;
 
-MCMover::MCMover(MCSettings mcSettings, std::shared_ptr<RNDGenerator> rnd, std::shared_ptr<Potential> pot) {
+MCMover::MCMover(MCSettings mcSettings, std::shared_ptr<RNDGenerator> rnd, std::shared_ptr<Potential> pot, double ** iniMCCoords) {
+  std::cout << "MCMover is initializing" << std::endl;
   _MCTotal = 0;
   _MCAccep = 0;
   _mcSettings = mcSettings;
   _rnd = rnd;
   _pot = pot;
+  _MCCoords = doubleMatrix(MCSettings::NDIM, NumbAtoms);
+  _newcoords = doubleMatrix(MCSettings::NDIM, NumbAtoms);
+  for (int i = 0; i < NumbAtoms; i ++)
+    for (int j = 0; j < MCSettings::NDIM; j ++)
+        _MCCoords[j][i] = iniMCCoords[j][i];
+}
+
+MCMover::~MCMover() {
+  std::cout << "MCMover destructor called..." << std::endl;
+  free_doubleMatrix(_MCCoords);
+  free_doubleMatrix(_newcoords);
 }
 
 void MCMover::MCMove()
@@ -37,15 +49,15 @@ void MCMover::MCMove()
        #endif
 
 
-       newcoords[id][gatom]  =  MCCoords[id][gatom];
-       newcoords[id][gatom] +=  disp[id];
+       _newcoords[id][gatom]  =  _MCCoords[id][gatom];
+       _newcoords[id][gatom] +=  disp[id];
        #ifdef coodstest
-       cout<<MCCoords[id][gatom]<<BLANK<<newcoords[id][gatom]<<endl;
+       cout<<_MCCoords[id][gatom]<<BLANK<<_newcoords[id][gatom]<<endl;
        #endif
     }
 
     double deltav = 0.0;         // ACCEPT/REJECT
-    deltav += (MCPot(gatom,newcoords)-MCPot(gatom,MCCoords));
+    deltav += (MCPot(gatom,_newcoords)-MCPot(gatom,_MCCoords));
     bool Accepted = false;
 
     if (deltav<0.0)             Accepted = true;
@@ -58,7 +70,7 @@ void MCMover::MCMove()
        _MCAccep += 1.0;
 
        for (int id=0;id<MCSettings::NDIM;id++)       // save accepted configuration
-       MCCoords[id][gatom] = newcoords[id][gatom];
+       _MCCoords[id][gatom] = _newcoords[id][gatom];
     }
   }   // END sum over atoms (fixed atom type)
 }
@@ -74,7 +86,7 @@ double MCMover::MCPot(int atom0, double **pos)
        double dr2 = 0.0;
        for (int id=0;id<MCSettings::NDIM;id++)
        {
-          dr[id]  = (pos[id][atom0] - MCCoords[id][atom1]);
+          dr[id]  = (pos[id][atom0] - _MCCoords[id][atom1]);
           dr2    += (dr[id]*dr[id]);
        }
        double r = sqrt(dr2);
@@ -85,4 +97,8 @@ double MCMover::MCPot(int atom0, double **pos)
 
 double MCMover::getAccRatio() {
   return _MCAccep/_MCTotal;
+}
+
+double ** MCMover::getMCCoords() {
+  return _MCCoords;
 }

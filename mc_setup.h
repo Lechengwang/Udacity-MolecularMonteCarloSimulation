@@ -5,7 +5,7 @@
 #include <string>
 
 namespace mcsimulation {
-// Those data structures are heavily used in simulation. Organize them into namespace
+// Those data structures are heavily read (won't change) in simulation. Organize them into namespace
 // Grant direct access to those data structures to avoid overhead of getter/setters
   typedef struct TParticle
   {
@@ -21,10 +21,7 @@ namespace mcsimulation {
   extern int NumbMoveAtoms;
   extern int NumbFixAtoms;
 
-  extern double ** MCCoords;   // translational degrees of freedom
   extern double ** iniMCCoords;// initial configuration of beads
-
-  extern double ** newcoords;  // buffer for new coordinates
   extern int * IMoving;
   extern int * IFix;
 }
