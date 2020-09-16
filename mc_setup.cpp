@@ -27,9 +27,7 @@ namespace mcsimulation {
   int NumbFixAtoms;
   double ** MCCoords;
   double ** iniMCCoords;
-  double ** optMCCoords;
   double ** newcoords;
-  int * Moving;
   int * IMoving;
   int * IFix;
 }
@@ -98,9 +96,7 @@ void MCSettings::MCMemAlloc(void)  // allocate  memmory
 {
   MCCoords    = doubleMatrix (MCSettings::NDIM,NumbAtoms);
   iniMCCoords = doubleMatrix (MCSettings::NDIM,NumbAtoms);
-  optMCCoords = doubleMatrix (MCSettings::NDIM,NumbAtoms);
   newcoords   = doubleMatrix (MCSettings::NDIM,NumbAtoms);
-  Moving      = new int [NumbAtoms]; // Moving[i]=0->fixed,other->relaxed
   IMoving     = new int [NumbAtoms]; // The ID of moving H2 in MCCoords
   IFix        = new int [NumbAtoms];
 //  cout<<"mem alloc done"<<BLANK<<MCSettings::NDIM<<endl;
@@ -112,11 +108,10 @@ void MCSettings::MCMemFree(void)  //  free memory
    std::cout <<"Calling destructor" << std::endl;
    free_doubleMatrix(MCCoords);
    free_doubleMatrix(newcoords);
-   free_doubleMatrix(optMCCoords);
    free_doubleMatrix(iniMCCoords);
 
-   delete Moving;
    delete IMoving;
+   delete IFix;
 }
 
 void MCSettings::MCConfigInit(void)
@@ -138,13 +133,11 @@ void MCSettings::MCConfigInit(void)
       fid>>id[i]>>iniMCCoords[0][i]>>iniMCCoords[1][i]>>iniMCCoords[2][i]>>relaxflag;
       if(relaxflag==IO_RELAX) 
       {
-         Moving[i]=1;
          IMoving[NumbMoveAtoms]=i;
          NumbMoveAtoms++;
       }
       else if(relaxflag==IO_FIX)
       { 
-         Moving[i]=0;
          IFix[NumbFixAtoms]=i;
          NumbFixAtoms++;
       }
@@ -158,7 +151,6 @@ void MCSettings::MCConfigInit(void)
      cout<<setw(8)<<iniMCCoords[0][j]<<BLANK;
      cout<<setw(8)<<iniMCCoords[1][j]<<BLANK;
      cout<<setw(8)<<iniMCCoords[2][j]<<BLANK;
-     cout<<setw(6)<<Moving[j]<<endl;
    }
    for(int j=0;j<NumbMoveAtoms;j++)
      cout<<setw(6)<<IMoving[j]<<endl;
