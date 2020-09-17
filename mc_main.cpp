@@ -21,18 +21,17 @@ using namespace mcsimulation;
 double avergCount;   // # of calls of get_estim inside a block
 double totalCount;   // sum avergCount  
 
-double _bpot;   // kinetic   energy, block average
 double _pot_total;  // kinetic   energy, global average
 fstream _feng;      // save accumulated energy
 
 #ifdef POTTEST
 const double rtest = 2.9654;
 #endif
-void MCGetAverage(std::shared_ptr<MCEstim>, double **, int *, int *);
+void MCGetAverage(double &, std::shared_ptr<MCEstim>, double **, int *, int *);
 void SaveAcceptRatio(long int,long int,double);
 void SaveSumEnergy(double,double);
-void SaveBlockAverages(long int);
-void SaveEnergy(const char [],double,int);
+void SaveBlockAverages(double, long int);
+void SaveEnergy(double,const char [],double,int);
 void InitTotalAverage(void);
 
 int main()
@@ -54,6 +53,7 @@ int main()
  InitTotalAverage();
  long int blockCount=0;
  double sumsCount=0.0;
+ double _bpot;
  while (blockCount < mcSettings -> getNumberOfMCBlocks())
  {
    blockCount ++;
@@ -69,7 +69,7 @@ int main()
      {
               // evaluate averages
        if (StepCount % mcSettings -> getMCSkipAverg() == 0)   // skip correlated configurations
-         MCGetAverage(estim, mcMover.getMCCoords(), mcSettings -> getIFix(), mcSettings -> getIMoving());
+         MCGetAverage(_bpot, estim, mcMover.getMCCoords(), mcSettings -> getIFix(), mcSettings -> getIMoving());
 
        if (StepCount % mcSettings -> getMCSkipTotal() == 0)
        {
@@ -81,11 +81,11 @@ int main()
      SaveAcceptRatio(StepCount,blockCount, mcMover.getAccRatio());
    }//End Steps
    if (blockCount>mcSettings -> getNumberOfEQBlocks())   // skip equilibration steps
-       SaveBlockAverages(blockCount);
+       SaveBlockAverages(_bpot, blockCount);
  }//End Blocks
 }
 
-void MCGetAverage(std::shared_ptr<MCEstim> estim, double ** MCCoords, int * IFix, int * IMoving)
+void MCGetAverage(double & _bpot, std::shared_ptr<MCEstim> estim, double ** MCCoords, int * IFix, int * IMoving)
 {
    avergCount += 1.0;
    totalCount += 1.0;
@@ -121,7 +121,7 @@ void SaveSumEnergy(double acount,double numb)
 
 }
 
-void SaveBlockAverages(long int blocknumb)
+void SaveBlockAverages(double _bpot, long int blocknumb)
 {
    const char *_proc_=__func__;    //   MCSaveBlockAverages()
 
@@ -131,10 +131,10 @@ void SaveBlockAverages(long int blocknumb)
    bc<<blocknumb;
 
    string fname = MCFileName + bc.str();
-   SaveEnergy         (MCFileName.c_str(),avergCount,blocknumb);
+   SaveEnergy(_bpot, MCFileName.c_str(),avergCount,blocknumb);
 }
 
-void SaveEnergy(const char fname [],double acount,int blocknumb)
+void SaveEnergy(double _bpot, const char fname [],double acount,int blocknumb)
 {
    const char *_proc_=__func__;    //  SaveEnergy()
    fstream fid;
