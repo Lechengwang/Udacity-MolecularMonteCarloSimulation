@@ -39,7 +39,7 @@ int main()
 {
  double vtest;
  std::shared_ptr<MCSettings> mcSettings = std::make_shared<MCSettings>();
- mcSettings -> IOReadParams(FINPUT);
+ IOReadParams(FINPUT, *(mcSettings.get()));
  // Only one random number generator is enough
  std::shared_ptr<RNDGenerator> rnd = std::make_shared<RNDGenerator>(0,1);
  mcSettings -> MCConfigInit();

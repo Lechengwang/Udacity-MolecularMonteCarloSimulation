@@ -1,6 +1,8 @@
 #ifndef _MC_INPUT_H
 #define _MC_INOUT_H 1
 
+// Some utility methods for IO
+
 const char FINPUT[]="qmc.input";   // input params file
 
 #include "mc_confg.h"
@@ -38,6 +40,8 @@ const char IO_EXT_GRA []    = ".gra.txt";   // radial  pair distribution
 const char IO_EXT_ENG []    = ".eng.txt";   // energy
 const char IO_SUM [] = "_sum";          // file name postfix for accum averages
 const char IO_EXT_POS []    = ".pos.txt";   // atomic position
+
+void IOReadParams(const char [], MCSettings &);
 
 void io_setout(fstream &, int=IO_PRECISION);
 void IOFileBackUp(const char []);
