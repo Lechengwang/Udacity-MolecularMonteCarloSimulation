@@ -13,10 +13,9 @@
 
 using namespace mcsimulation;
 
-MCEstim::MCEstim(std::shared_ptr<Potential> pot)
+MCEstim::MCEstim(std::shared_ptr<Potential> pot) : _pot(pot)
 {
  std::cout << "Initializing MC Estimators..." << std::endl;
- _pot = pot;
 }
 
 MCEstim::~MCEstim() {

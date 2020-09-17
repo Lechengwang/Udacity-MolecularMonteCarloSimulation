@@ -13,7 +13,7 @@ using namespace mcsimulation;
 
 Potential::Potential()
 {
-   std::cout << "Initializing potentials..." << std::endl;
+   std::cout << "Potential constructor called..." << std::endl;
    string fextn;
    fextn=EXT_POT;
    string fname=(MCAtom.fpot + fextn);
@@ -133,41 +133,3 @@ void Potential::read_datafile(const char fname[],double *grid,double *data)
 // nrerror(_proc_,"Wrong size of data file");
    fid.close();
 }
-/*
-void Potential::read_datafile(const char fname[],double *grid,double *data0,double *data1)
-//  fname:      first   column grid points 
-//	        second  column data points
-//	        third   column data points
-{
-   const char *_proc_=__func__;    // "read_DataFile"; 
-   
-   ifstream fid(fname,ios::in);   
-
-//   if (!fid.good())
-//   _io_error(_proc_,IO_ERR_FOPEN,fname);
-
-   string sgrid;  
-   string sdata;
-  
-   int count=0;
-   while (fid>>sgrid)
-   {
-       if ((sgrid != "") && (sgrid != COMMENTS))  // skip comments and empty lines
-       {                                          // should be compatible with get_filesize()
-           grid  [count] = strtod(sgrid.c_str(),NULL);
-
-           fid>>sdata;
-           data0 [count] = strtod(sdata.c_str(),NULL);
-
-           fid>>sdata;
-           data1 [count] = strtod(sdata.c_str(),NULL);
-
-           count++;
-       }  
-       getline(fid,sdata,'\n');              // skip the rest of the line 
-   }
-// if (count!= maxsize) 
-// nrerror(_proc_,"Wrong size of data file");
-   fid.close();
-}
-*/

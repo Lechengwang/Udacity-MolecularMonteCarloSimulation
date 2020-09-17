@@ -11,13 +11,13 @@
 
 using namespace mcsimulation;
 
-MCMover::MCMover(std::shared_ptr<MCSettings> mcSettings, std::shared_ptr<RNDGenerator> rnd, std::shared_ptr<Potential> pot) {
-  std::cout << "MCMover is initializing" << std::endl;
+MCMover::MCMover(std::shared_ptr<MCSettings> mcSettings, std::shared_ptr<RNDGenerator> rnd, std::shared_ptr<Potential> pot) : 
+  _mcSettings(mcSettings),
+  _rnd(rnd),
+  _pot(pot) {
+  std::cout << "MCMover constructor called..." << std::endl;
   _MCTotal = 0;
   _MCAccep = 0;
-  _mcSettings = mcSettings;
-  _rnd = rnd;
-  _pot = pot;
   _MCCoords = doubleMatrix(MCSettings::NDIM, NumbAtoms);
   _newcoords = doubleMatrix(MCSettings::NDIM, NumbAtoms);
   double ** iniMCCoords = _mcSettings -> getIniMCCoords();

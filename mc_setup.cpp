@@ -101,7 +101,7 @@ int * MCSettings::getIFix() {
 
 MCSettings::MCSettings()  // allocate  memmory 
 {
-  std::cout << "MCSettings: allocating memory" << std::endl;
+  std::cout << "MCSettings constructor called" << std::endl;
   _iniMCCoords = doubleMatrix (MCSettings::NDIM,NumbAtoms);
   _IMoving     = new int [NumbAtoms]; // The ID of moving H2 in MCCoords
   _IFix        = new int [NumbAtoms];
@@ -110,7 +110,7 @@ MCSettings::MCSettings()  // allocate  memmory
 
 MCSettings::~MCSettings()  //  free memory
 {
-   std::cout <<"MCSettings: Calling destructor" << std::endl;
+   std::cout <<"MCSettings destructor called" << std::endl;
    free_doubleMatrix(_iniMCCoords);
 
    delete _IMoving;
