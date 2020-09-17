@@ -18,14 +18,14 @@ CC=g++
 #-------------------------------------------------------------------------
 # objects for QMC
  
-mch2OBJS=mc_clsmc.o mc_estim.o mc_input.o MCSettings.o mc_poten.o mc_randg.o mc_utils.o
+mch2OBJS=mc_clsmc.o mc_estim.o mc_input.o MCSettings.o mc_poten.o RNDGenerator.o mc_utils.o
  
 #----------------------------------------- PIMC --------------------------
 
 mch2:			mc_main.o $(mch2OBJS) 
 			$(CC) $(options) -o $@  mc_main.o $(mch2OBJS) $(LDFLAGS) 
 
-mc_main.o:		mc_main.cpp mc_confg.h mc_input.h MCSettings.h mc_randg.h mc_utils.h mc_clsmc.h mc_estim.h 
+mc_main.o:		mc_main.cpp mc_confg.h mc_input.h MCSettings.h RNDGenerator.h mc_utils.h mc_clsmc.h mc_estim.h 
 			$(CC) $(options) -c  $(CFLAGS) -o $@ $*.cpp
  
 mc_input.o:        	mc_input.cpp mc_input.h	mc_confg.h MCSettings.h mc_utils.h 
@@ -34,7 +34,7 @@ mc_input.o:        	mc_input.cpp mc_input.h	mc_confg.h MCSettings.h mc_utils.h
 MCSettings.o:        	MCSettings.cpp MCSettings.h mc_confg.h mc_utils.h 
 			$(CC) $(options) -c  $(CFLAGS) -o $@ $*.cpp
 
-mc_randg.o:        	mc_randg.cpp mc_randg.h mc_input.h mc_confg.h mc_utils.h  
+RNDGenerator.o:        	RNDGenerator.cpp RNDGenerator.h mc_input.h mc_confg.h mc_utils.h  
 			$(CC) $(options) -c  $(CFLAGS) -o $@ $*.cpp
 
 mc_utils.o:        	mc_utils.cpp mc_utils.h mc_confg.h 

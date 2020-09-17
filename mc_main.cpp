@@ -11,7 +11,7 @@
 #include "mc_utils.h"
 #include "mc_poten.h"
 #include "mc_clsmc.h"
-#include "mc_randg.h"
+#include "RNDGenerator.h"
 
 //#define FNAMETEST 1
 //#define POTTEST 1

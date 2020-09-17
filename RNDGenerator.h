@@ -31,4 +31,4 @@ private:
   int *_stream[MAXGENS]; // rnd number streams
   int _seed; // seed for rnd number
 };
-#endif  // mc_randg.h
+#endif

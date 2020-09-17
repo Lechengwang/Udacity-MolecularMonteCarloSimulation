@@ -6,7 +6,7 @@
 #include "sprng.h"	
 
 #include "mc_input.h"
-#include "mc_randg.h"
+#include "RNDGenerator.h"
 #include "mc_utils.h"
 	
 
