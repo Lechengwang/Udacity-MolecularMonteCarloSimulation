@@ -8,7 +8,7 @@ namespace mcsimulation {
 // Those data structures are heavily read (won't change) in simulation. Organize them into namespace
 // Grant direct access to those data structures to avoid overhead of getter/setters
 // This is a balance between OOD encapsulation and efficiency
-  typedef struct TParticle
+  struct TParticle
   {
    int    numb;            //  numb of atoms in 1D
    double mcstep;          //  simulation step length
