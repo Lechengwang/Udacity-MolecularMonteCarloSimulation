@@ -2,7 +2,6 @@
 #define _MC_POTEN_H 1
 
 #include "mc_confg.h"
-#include "mc_setup.h"
 #include "mc_utils.h"
 
 int get_filesize(const char []);

@@ -1,7 +1,7 @@
 #include <math.h>
 #include <iomanip>
 
-#include "mc_setup.h"
+#include "MCSettings.h"
 #include "mc_poten.h"
 #include "mc_utils.h"
 #include "mc_estim.h"

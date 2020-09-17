@@ -4,7 +4,7 @@
 #include <sstream>
 #include <iomanip>
 
-#include "mc_setup.h"
+#include "MCSettings.h"
 #include "mc_utils.h"
 #include "mc_confg.h"
 #include "mc_input.h"

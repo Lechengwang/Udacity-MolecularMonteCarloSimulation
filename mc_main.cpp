@@ -7,7 +7,7 @@
 #include "mc_input.h"
 #include "mc_estim.h"
 #include "mc_confg.h"
-#include "mc_setup.h"
+#include "MCSettings.h"
 #include "mc_utils.h"
 #include "mc_poten.h"
 #include "mc_clsmc.h"
