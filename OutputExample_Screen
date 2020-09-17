@@ -1,0 +1,44 @@
+MCSettings constructor called // Constructor calls
+OutPut   ./results/ // Line 2-11 are dumping of the qmc.input
+File Name Prefix   h2
+Temperature 0.5
+    H2      0.2   parah2   h2matrix.pos   
+Number of Steps in block = 200000
+Number of Blocks = 5   1
+
+Number of steps to skip to save ACCEPT RATIO   50000
+Number of steps to skip to save ACCUML AVERG   50000
+Number of steps to skip to evaluate AVERAGES   10
+RNDGenerator constructor called. // Constructor calls
+The random seed for this work is: 750493418 // dumpling random seed
+Total number of H2 is: 4 // Line 14-16 are summary of the initial position file h2matrix.pos
+Total number of relaxing H2 is:      4
+Total number of fixed H2 is:      0
+Potential constructor called...// Line 17-19 are constructor calls
+MCMover constructor called...
+Initializing MC Estimators...
+BLOCK:       1   STEP:   50000         H2   0.396455 // Line 20-39 are average acceptance ratio of the random walk during simulation  
+BLOCK:       1   STEP:  100000         H2     0.3971 // H2 0.3971 means the average acceptance ratio of H2's random walk is 0.3971  
+BLOCK:       1   STEP:  150000         H2   0.397062 // The simulation was well configured, so expecting ratio between 0.3-0.5  
+BLOCK:       1   STEP:  200000         H2   0.396851 // If the ratio is between 0.3-0.5 then it proves the simulation performs well
+BLOCK:       2   STEP:   50000         H2     0.3968   
+BLOCK:       2   STEP:  100000         H2   0.396911   
+BLOCK:       2   STEP:  150000         H2   0.396679   
+BLOCK:       2   STEP:  200000         H2   0.396726   
+BLOCK:       3   STEP:   50000         H2   0.396891   
+BLOCK:       3   STEP:  100000         H2     0.3968   
+BLOCK:       3   STEP:  150000         H2   0.396884   
+BLOCK:       3   STEP:  200000         H2   0.396905   
+BLOCK:       4   STEP:   50000         H2   0.396928   
+BLOCK:       4   STEP:  100000         H2   0.396962   
+BLOCK:       4   STEP:  150000         H2   0.396989   
+BLOCK:       4   STEP:  200000         H2   0.397161   
+BLOCK:       5   STEP:   50000         H2   0.397131   
+BLOCK:       5   STEP:  100000         H2   0.397211   
+BLOCK:       5   STEP:  150000         H2   0.397084   
+BLOCK:       5   STEP:  200000         H2   0.397085   
+MCEstim destructor called... // Line 40-44 are logs for destructor calls.
+MCMover destructor called...
+Potential Destructor called
+RND Destructor called.
+MCSettings destructor called
