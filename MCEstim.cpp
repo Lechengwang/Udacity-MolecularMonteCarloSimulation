@@ -2,7 +2,7 @@
 #include <iomanip>
 
 #include "MCSettings.h"
-#include "mc_poten.h"
+#include "Potential.h"
 #include "mc_utils.h"
 #include "MCEstim.h"
 #include "mc_input.h"

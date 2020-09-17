@@ -32,4 +32,6 @@ void  mmsort(double *, int *,int);  // sort dist and rearrange labels
 double dmax(double,double);
 double dmin(double,double);
 
+int get_filesize(const char []);
+
 #endif  // mc_utils.h

@@ -7,7 +7,6 @@
 #include "mc_confg.h"
 #include "mc_input.h"
 #include "mc_utils.h"
-#include "mc_poten.h"
 #include "MCSettings.h"
 
 using namespace mcsimulation;

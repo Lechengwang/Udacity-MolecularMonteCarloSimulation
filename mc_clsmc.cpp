@@ -2,7 +2,7 @@
 #include "mc_confg.h"
 #include "MCSettings.h"
 #include "mc_utils.h"
-#include "mc_poten.h"
+#include "Potential.h"
 #include "mc_clsmc.h"
 #include "RNDGenerator.h"
 #include <math.h>

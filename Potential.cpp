@@ -1,5 +1,5 @@
 #include "mc_utils.h"
-#include "mc_poten.h"
+#include "Potential.h"
 #include "MCSettings.h"
 
 #include <math.h>
@@ -73,32 +73,6 @@ double Potential::SPot1D(double r)
    splint(_pgrid1D,_poten1D,_pderiv2,size,r,spot);
 //   cout<<"r: "<<r<<" pot= "<<spot<<endl;
    return spot;
-}
-
-int get_filesize(const char fname [])
-// count lines with data in input file
-{	
-   const char *_proc_=__func__;    // "file_size"; 
-
-   ifstream fid(fname,ios::in);   
-
-//  if (!fid.good())
-//   _io_error(_proc_,IO_ERR_FOPEN,fname);
-
-   string stmp;
-
-   int count=0;
-   while (fid>>stmp)
-   {
-      if ((stmp != "") && (stmp != COMMENTS)) count++;
-      getline(fid,stmp,'\n');
-   } 
-
-   fid.close();
-   return (count);
-
-// fid.clear();             // can be used to reset input file 
-// fid.seekg(0,ios::beg);
 }
 
 void Potential::read_datafile(const char fname[],double *grid,double *data)

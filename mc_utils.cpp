@@ -231,3 +231,29 @@ double dmin(double x, double y)
     return y;
 }
 
+int get_filesize(const char fname [])
+// count lines with data in input file
+{
+   const char *_proc_=__func__;    // "file_size"; 
+
+   ifstream fid(fname,ios::in);
+
+//  if (!fid.good())
+//   _io_error(_proc_,IO_ERR_FOPEN,fname);
+
+   string stmp;
+
+   int count=0;
+   while (fid>>stmp)
+   {
+      if ((stmp != "") && (stmp != COMMENTS)) count++;
+      getline(fid,stmp,'\n');
+   }
+
+   fid.close();
+   return (count);
+
+// fid.clear();             // can be used to reset input file 
+// fid.seekg(0,ios::beg);
+}
+

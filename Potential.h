@@ -4,8 +4,6 @@
 #include "mc_confg.h"
 #include "mc_utils.h"
 
-int get_filesize(const char []);
-
 class Potential {
 public:
   Potential();
@@ -31,4 +29,4 @@ private:
   const std::string EXT_POT = ".pot";
 };
 
-#endif  // mc_poten.h
+#endif  //
