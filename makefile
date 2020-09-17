@@ -18,14 +18,14 @@ CC=g++
 #-------------------------------------------------------------------------
 # objects for QMC
  
-mch2OBJS=mc_clsmc.o MCEstim.o mc_input.o MCSettings.o Potential.o RNDGenerator.o mc_utils.o
+mch2OBJS=MCMover.o MCEstim.o mc_input.o MCSettings.o Potential.o RNDGenerator.o mc_utils.o
  
 #----------------------------------------- PIMC --------------------------
 
 mch2:			mc_main.o $(mch2OBJS) 
 			$(CC) $(options) -o $@  mc_main.o $(mch2OBJS) $(LDFLAGS) 
 
-mc_main.o:		mc_main.cpp mc_confg.h mc_input.h MCSettings.h RNDGenerator.h mc_utils.h mc_clsmc.h MCEstim.h 
+mc_main.o:		mc_main.cpp mc_confg.h mc_input.h MCSettings.h RNDGenerator.h mc_utils.h MCMover.h MCEstim.h 
 			$(CC) $(options) -c  $(CFLAGS) -o $@ $*.cpp
  
 mc_input.o:        	mc_input.cpp mc_input.h	mc_confg.h MCSettings.h mc_utils.h 
@@ -43,7 +43,7 @@ mc_utils.o:        	mc_utils.cpp mc_utils.h mc_confg.h
 Potential.o:        	Potential.cpp Potential.h MCSettings.h mc_confg.h mc_utils.h mc_input.cpp
 			$(CC) $(options) -c  $(CFLAGS) -o $@ $*.cpp
 
-mc_clsmc.o:        	mc_clsmc.cpp mc_clsmc.h Potential.h MCSettings.h mc_utils.h
+MCMover.o:        	MCMover.cpp MCMover.h Potential.h MCSettings.h mc_utils.h
 			$(CC) $(options) -c  $(CFLAGS) -o $@ $*.cpp
 
 MCEstim.o:        	MCEstim.cpp MCEstim.h MCSettings.h mc_utils.h Potential.h mc_input.h mc_confg.h 

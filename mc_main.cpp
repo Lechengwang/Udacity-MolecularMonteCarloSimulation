@@ -10,7 +10,7 @@
 #include "MCSettings.h"
 #include "mc_utils.h"
 #include "Potential.h"
-#include "mc_clsmc.h"
+#include "MCMover.h"
 #include "RNDGenerator.h"
 
 //#define FNAMETEST 1
