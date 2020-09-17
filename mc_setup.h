@@ -64,6 +64,8 @@ private:
   int _mcSkipTotal;     //  to save accumulated average
   int _mcSkipAverg;     //  to evaluate averages
 
+
+  // Avoid using any wrapper like smart pointers or vector. Those data structure is heavily used in simulation
   double ** _iniMCCoords;
   int * _IMoving;
   int * _IFix;

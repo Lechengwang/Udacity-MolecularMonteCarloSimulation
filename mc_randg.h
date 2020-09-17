@@ -26,6 +26,8 @@ public:
 
 private:
   static const int MAXGENS = 15; // max number of rnd generators
+  // This is the raw data returned by sprng random library. 
+  // Will be heavily used in simulation thus no wrapper like smart points or vectors
   int *_stream[MAXGENS]; // rnd number streams
   int _seed; // seed for rnd number
 };

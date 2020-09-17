@@ -21,6 +21,8 @@ private:
   std::shared_ptr<MCSettings> _mcSettings;
   std::shared_ptr<RNDGenerator> _rnd;
   std::shared_ptr<Potential> _pot;
+  // Similar as the pointers in mc_setup.h, those 2 arrays is heavily used in simulation
+  // thus no wrappers like smart pointers or vectors
   double ** _newcoords;
   double ** _MCCoords;
 };
