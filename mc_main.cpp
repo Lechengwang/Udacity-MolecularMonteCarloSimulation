@@ -5,7 +5,7 @@
 #include <memory>
 
 #include "mc_input.h"
-#include "mc_estim.h"
+#include "MCEstim.h"
 #include "mc_confg.h"
 #include "MCSettings.h"
 #include "mc_utils.h"

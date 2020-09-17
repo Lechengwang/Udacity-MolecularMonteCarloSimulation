@@ -18,14 +18,14 @@ CC=g++
 #-------------------------------------------------------------------------
 # objects for QMC
  
-mch2OBJS=mc_clsmc.o mc_estim.o mc_input.o MCSettings.o mc_poten.o RNDGenerator.o mc_utils.o
+mch2OBJS=mc_clsmc.o MCEstim.o mc_input.o MCSettings.o mc_poten.o RNDGenerator.o mc_utils.o
  
 #----------------------------------------- PIMC --------------------------
 
 mch2:			mc_main.o $(mch2OBJS) 
 			$(CC) $(options) -o $@  mc_main.o $(mch2OBJS) $(LDFLAGS) 
 
-mc_main.o:		mc_main.cpp mc_confg.h mc_input.h MCSettings.h RNDGenerator.h mc_utils.h mc_clsmc.h mc_estim.h 
+mc_main.o:		mc_main.cpp mc_confg.h mc_input.h MCSettings.h RNDGenerator.h mc_utils.h mc_clsmc.h MCEstim.h 
 			$(CC) $(options) -c  $(CFLAGS) -o $@ $*.cpp
  
 mc_input.o:        	mc_input.cpp mc_input.h	mc_confg.h MCSettings.h mc_utils.h 
@@ -43,10 +43,10 @@ mc_utils.o:        	mc_utils.cpp mc_utils.h mc_confg.h
 mc_poten.o:        	mc_poten.cpp mc_poten.h MCSettings.h mc_confg.h mc_utils.h mc_input.cpp
 			$(CC) $(options) -c  $(CFLAGS) -o $@ $*.cpp
 
-mc_clsmc.o:        	mc_clsmc.cpp mc_clsmc.h mc_poten.h MCSettings.h mc_utils.h mc_estim.h
+mc_clsmc.o:        	mc_clsmc.cpp mc_clsmc.h mc_poten.h MCSettings.h mc_utils.h
 			$(CC) $(options) -c  $(CFLAGS) -o $@ $*.cpp
 
-mc_estim.o:        	mc_estim.cpp mc_estim.h MCSettings.h mc_utils.h mc_poten.h mc_input.h mc_confg.h 
+MCEstim.o:        	MCEstim.cpp MCEstim.h MCSettings.h mc_utils.h mc_poten.h mc_input.h mc_confg.h 
 			$(CC) $(options) -c  $(CFLAGS) -o $@ $*.cpp
 
 .PHONY: clean
